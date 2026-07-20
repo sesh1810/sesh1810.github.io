@@ -1,339 +1,715 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seshasayi Rangaraj | Resume</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Seshasayi Rangaraj | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0a0a0f;
-  --bg2:#12121a;
-  --bg3:#1a1a26;
-  --accent:#00e87b;
-  --accent2:#00c9ff;
-  --text:#e8e8ef;
-  --text2:#9898a8;
-  --text3:#6a6a78;
-  --card:#15151f;
-  --border:#2a2a38;
-  --gradient:linear-gradient(135deg,#00e87b,#00c9ff);
+
+/* ── Light Theme (default) ── */
+:root, [data-theme="light"] {
+  --bg: #f7f8fc;
+  --bg2: #eef0f7;
+  --bg3: #e4e7f1;
+  --accent: #2563eb;
+  --accent2: #0891b2;
+  --accent-soft: rgba(37,99,235,.08);
+  --accent-glow: rgba(37,99,235,.15);
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --gradient: linear-gradient(135deg, #2563eb, #0891b2);
+  --nav-bg: rgba(247,248,252,.88);
+  --nav-border: rgba(0,0,0,.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,.1);
+  --canvas-dot: rgba(37,99,235,.12);
+  --canvas-line: rgba(37,99,235,.04);
+  --scrollbar-bg: var(--bg2);
+  --scrollbar-thumb: var(--accent);
+  --code-bg: rgba(37,99,235,.06);
+  --badge-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  --bg: #0c1222;
+  --bg2: #111a2e;
+  --bg3: #172038;
+  --accent: #3b82f6;
+  --accent2: #22d3ee;
+  --accent-soft: rgba(59,130,246,.1);
+  --accent-glow: rgba(59,130,246,.2);
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --card: #141e36;
+  --border: #1e2d4a;
+  --border-hover: #2a3f66;
+  --gradient: linear-gradient(135deg, #3b82f6, #22d3ee);
+  --nav-bg: rgba(12,18,34,.92);
+  --nav-border: rgba(255,255,255,.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.3);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,.4);
+  --canvas-dot: rgba(59,130,246,.2);
+  --canvas-line: rgba(59,130,246,.06);
+  --scrollbar-bg: var(--bg2);
+  --scrollbar-thumb: var(--accent);
+  --code-bg: rgba(59,130,246,.08);
+  --badge-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* ── Theme transition ── */
+html[data-theme] * {
+  transition: background-color .4s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
 html{scroll-behavior:smooth;font-size:16px}
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:'Inter',sans-serif;
+  font-family:'Inter',system-ui,sans-serif;
   line-height:1.6;
   overflow-x:hidden;
 }
 h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600}
 
 /* Scrollbar */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--scrollbar-bg)}
+::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:3px}
 
-/* Animated background grid */
-.bg-grid{
+/* Scroll progress bar */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:3px;z-index:200;
+  background:var(--gradient);
+  width:0%;
+  transition:width .05s linear;
+}
+
+/* ── Network Canvas ── */
+#network-canvas{
   position:fixed;top:0;left:0;width:100%;height:100%;
-  background-image:
-    linear-gradient(rgba(0,232,123,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,232,123,.03) 1px,transparent 1px);
-  background-size:60px 60px;
-  z-index:0;
-  pointer-events:none;
-}
-
-/* Floating orbs */
-.orb{
-  position:fixed;border-radius:50%;filter:blur(80px);opacity:.15;z-index:0;pointer-events:none;
-  animation:float 20s ease-in-out infinite;
-}
-.orb-1{width:400px;height:400px;background:#00e87b;top:-100px;right:-100px;animation-delay:0s}
-.orb-2{width:300px;height:300px;background:#00c9ff;bottom:-50px;left:-50px;animation-delay:-7s}
-.orb-3{width:250px;height:250px;background:#7b00e8;top:50%;left:50%;animation-delay:-14s}
-@keyframes float{
-  0%,100%{transform:translate(0,0) scale(1)}
-  25%{transform:translate(30px,-40px) scale(1.1)}
-  50%{transform:translate(-20px,30px) scale(.95)}
-  75%{transform:translate(40px,20px) scale(1.05)}
+  z-index:0;pointer-events:none;
+  opacity:.6;
 }
 
 .container{max-width:1100px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
 
-/* NAV */
+/* ── NAV ── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(10,10,15,.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,255,255,.05);
-  transition:all .3s ease;
+  position:fixed;top:3px;left:0;right:0;z-index:100;
+  background:var(--nav-bg);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--nav-border);
+  transition:box-shadow .3s ease, background .3s ease;
 }
-nav .container{display:flex;align-items:center;justify-content:space-between;height:64px}
-.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:-.5px}
-.nav-logo span{color:var(--text)}
-.nav-links{display:flex;gap:2rem;list-style:none}
+nav.scrolled{box-shadow:var(--shadow-md)}
+nav .container{display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
 .nav-links a{
-  color:var(--text2);text-decoration:none;font-size:.85rem;font-weight:500;
-  letter-spacing:.5px;text-transform:uppercase;transition:color .3s;position:relative;
+  color:var(--text2);text-decoration:none;font-size:.82rem;font-weight:500;
+  letter-spacing:.3px;text-transform:uppercase;transition:color .3s;position:relative;
 }
 .nav-links a::after{
   content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;
-  background:var(--gradient);transition:width .3s ease;
+  background:var(--gradient);transition:width .3s ease;border-radius:1px;
 }
-.nav-links a:hover{color:var(--accent)}
-.nav-links a:hover::after{width:100%}
+.nav-links a:hover, .nav-links a.active{color:var(--accent)}
+.nav-links a:hover::after, .nav-links a.active::after{width:100%}
 
-/* HERO */
+/* Theme Toggle */
+.theme-toggle{
+  background:var(--accent-soft);border:1px solid var(--border);
+  border-radius:10px;cursor:pointer;
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  transition:all .3s ease;position:relative;overflow:hidden;
+}
+.theme-toggle:hover{border-color:var(--accent);background:var(--accent-glow);transform:scale(1.05)}
+.theme-toggle svg{width:18px;height:18px;color:var(--accent);transition:all .3s ease}
+.theme-toggle .icon-sun, .theme-toggle .icon-moon{position:absolute}
+[data-theme="light"] .theme-toggle .icon-moon{opacity:0;transform:rotate(90deg) scale(0)}
+[data-theme="light"] .theme-toggle .icon-sun{opacity:1;transform:rotate(0) scale(1)}
+[data-theme="dark"] .theme-toggle .icon-sun{opacity:0;transform:rotate(-90deg) scale(0)}
+[data-theme="dark"] .theme-toggle .icon-moon{opacity:1;transform:rotate(0) scale(1)}
+
+/* Mobile menu toggle */
+.mobile-menu-btn{
+  display:none;background:none;border:none;cursor:pointer;
+  width:32px;height:32px;position:relative;
+}
+.mobile-menu-btn span{
+  display:block;width:20px;height:2px;background:var(--text2);
+  position:absolute;left:6px;transition:all .3s ease;
+}
+.mobile-menu-btn span:nth-child(1){top:10px}
+.mobile-menu-btn span:nth-child(2){top:16px}
+.mobile-menu-btn span:nth-child(3){top:22px}
+
+/* ── HERO ── */
 .hero{
   min-height:100vh;display:flex;align-items:center;
-  padding-top:64px;
+  padding-top:60px;position:relative;
 }
 .hero-content{width:100%}
 .hero-label{
   display:inline-flex;align-items:center;gap:.5rem;
-  padding:.4rem 1rem;border-radius:100px;
-  background:rgba(0,232,123,.08);border:1px solid rgba(0,232,123,.2);
+  padding:.4rem 1rem .4rem .75rem;border-radius:100px;
+  background:var(--accent-soft);border:1px solid rgba(37,99,235,.15);
   font-size:.8rem;color:var(--accent);font-weight:500;
   margin-bottom:1.5rem;
-  animation:fadeInUp .8s ease .2s both;
+  animation:fadeInUp .7s ease .2s both;
 }
-.hero-label .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+[data-theme="dark"] .hero-label{border-color:rgba(59,130,246,.2)}
+.hero-label .status-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:pulse 2.5s ease infinite;
+  box-shadow:0 0 6px var(--accent-glow);
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+
 .hero h1{
-  font-size:clamp(2.5rem,5vw,4.2rem);line-height:1.1;
-  letter-spacing:-2px;margin-bottom:1rem;
-  animation:fadeInUp .8s ease .4s both;
+  font-size:clamp(2.8rem,5.5vw,4.5rem);line-height:1.08;
+  letter-spacing:-2.5px;margin-bottom:1rem;
+  animation:fadeInUp .7s ease .35s both;
 }
 .hero h1 .gradient-text{
   background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
 .hero-sub{
-  font-size:1.15rem;color:var(--text2);max-width:640px;line-height:1.7;
-  animation:fadeInUp .8s ease .6s both;
+  font-size:1.1rem;color:var(--text2);max-width:640px;line-height:1.75;
+  animation:fadeInUp .7s ease .5s both;
 }
 .hero-contact{
-  display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:2rem;
-  animation:fadeInUp .8s ease .8s both;
+  display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:2rem;
+  animation:fadeInUp .7s ease .65s both;
 }
 .hero-contact a{
-  display:flex;align-items:center;gap:.5rem;
-  color:var(--text2);text-decoration:none;font-size:.9rem;
+  display:flex;align-items:center;gap:.45rem;
+  color:var(--text2);text-decoration:none;font-size:.88rem;
   transition:color .3s;
 }
 .hero-contact a:hover{color:var(--accent)}
-.hero-contact svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.hero-contact svg{width:16px;height:16px;flex-shrink:0}
+
+.hero-socials{
+  display:flex;gap:.6rem;margin-top:1.8rem;
+  animation:fadeInUp .7s ease .8s both;
+}
+.social-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:10px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);text-decoration:none;
+  transition:all .3s ease;
+  box-shadow:var(--shadow-sm);
+}
+.social-btn:hover{
+  border-color:var(--accent);color:var(--accent);
+  transform:translateY(-2px);box-shadow:var(--shadow-md);
+}
+.social-btn svg{width:18px;height:18px}
 
 .scroll-indicator{
   position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:.5rem;
-  color:var(--text3);font-size:.75rem;letter-spacing:1px;text-transform:uppercase;
-  animation:fadeInUp .8s ease 1.2s both;
+  color:var(--text3);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;
+  animation:fadeInUp .7s ease 1s both;
 }
-.scroll-line{width:1px;height:40px;background:var(--border);position:relative;overflow:hidden}
+.scroll-line{
+  width:1px;height:36px;background:var(--border);position:relative;overflow:hidden;border-radius:1px;
+}
 .scroll-line::after{
   content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;
-  background:var(--accent);animation:scrollDown 2s ease infinite;
+  background:var(--accent);animation:scrollDown 2.5s ease infinite;
 }
 @keyframes scrollDown{0%{top:-50%}100%{top:100%}}
-
 @keyframes fadeInUp{
-  from{opacity:0;transform:translateY(30px)}
+  from{opacity:0;transform:translateY(24px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* SECTIONS */
-section{padding:6rem 0}
-.section-header{margin-bottom:3rem}
+/* ── SECTIONS ── */
+section{padding:5.5rem 0}
+.section-header{margin-bottom:3rem;position:relative}
 .section-label{
-  font-size:.75rem;text-transform:uppercase;letter-spacing:3px;
-  color:var(--accent);font-weight:600;margin-bottom:.5rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;text-transform:uppercase;letter-spacing:3px;
+  color:var(--accent);font-weight:500;margin-bottom:.4rem;
+  display:flex;align-items:center;gap:.5rem;
 }
-.section-title{font-size:clamp(1.8rem,3vw,2.5rem);letter-spacing:-1px}
+.section-label::before{
+  content:'';display:inline-block;width:20px;height:2px;
+  background:var(--gradient);border-radius:1px;
+}
+.section-title{font-size:clamp(1.8rem,3vw,2.4rem);letter-spacing:-1px}
 
-/* EXPERIENCE TIMELINE */
-.timeline{position:relative;padding-left:2rem}
+/* ── EXPERIENCE TIMELINE ── */
+.timeline{position:relative;padding-left:2.5rem}
 .timeline::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
   background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);
+  border-radius:1px;
 }
 .timeline-item{
   position:relative;margin-bottom:3rem;
-  opacity:0;transform:translateX(-20px);
-  transition:all .6s ease;
+  opacity:0;transform:translateX(-16px);
+  transition:all .6s cubic-bezier(.25,.46,.45,.94);
 }
 .timeline-item.visible{opacity:1;transform:translateX(0)}
 .timeline-item::before{
-  content:'';position:absolute;left:-2rem;top:.5rem;
-  width:12px;height:12px;border-radius:50%;
+  content:'';position:absolute;left:-2.5rem;top:.65rem;
+  width:10px;height:10px;border-radius:50%;
   background:var(--bg);border:2px solid var(--accent);
-  transform:translateX(-5px);
+  transform:translateX(-4px);
   transition:all .3s ease;
 }
-.timeline-item:hover::before{background:var(--accent);box-shadow:0 0 15px rgba(0,232,123,.5)}
-.timeline-company{
-  display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.25rem;
+.timeline-item:hover::before{
+  background:var(--accent);
+  box-shadow:0 0 12px var(--accent-glow);
 }
-.timeline-company h3{font-size:1.4rem;letter-spacing:-.5px}
-.timeline-company .location{color:var(--text3);font-size:.85rem}
+
+.timeline-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap}
+.company-badge{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:var(--badge-shadow);
+  border:1px solid var(--border);
+  background:var(--card);
+  transition:transform .3s ease;
+}
+.timeline-item:hover .company-badge{transform:scale(1.08)}
+.company-badge svg{width:22px;height:22px}
+.company-badge img{width:22px;height:22px;object-fit:contain}
+
+.timeline-company{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.timeline-company h3{font-size:1.3rem;letter-spacing:-.5px}
+.timeline-company .location{color:var(--text3);font-size:.82rem;font-weight:400}
 .timeline-role{
-  font-size:1rem;color:var(--accent);font-weight:500;margin-bottom:.15rem;
+  font-size:.95rem;color:var(--accent);font-weight:500;margin-bottom:.1rem;
 }
-.timeline-date{font-size:.8rem;color:var(--text3);margin-bottom:.75rem;letter-spacing:.5px}
+.timeline-date{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;color:var(--text3);margin-bottom:.75rem;letter-spacing:.5px;
+}
 .timeline-bullets{list-style:none}
 .timeline-bullets li{
-  position:relative;padding-left:1.2rem;margin-bottom:.6rem;
-  color:var(--text2);font-size:.92rem;line-height:1.65;
+  position:relative;padding-left:1.1rem;margin-bottom:.55rem;
+  color:var(--text2);font-size:.9rem;line-height:1.7;
 }
 .timeline-bullets li::before{
-  content:'';position:absolute;left:0;top:.6rem;
-  width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.6;
+  content:'';position:absolute;left:0;top:.65rem;
+  width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.5;
 }
 
-/* EDUCATION */
-.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:1.5rem}
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.5rem}
 .edu-card{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:2rem;position:relative;overflow:hidden;
-  transition:all .4s ease;
-  opacity:0;transform:translateY(20px);
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:1.75rem;position:relative;overflow:hidden;
+  transition:all .4s ease;box-shadow:var(--shadow-sm);
+  opacity:0;transform:translateY(16px);
 }
 .edu-card.visible{opacity:1;transform:translateY(0)}
-.edu-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.edu-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--shadow-md)}
 .edu-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--gradient);opacity:0;transition:opacity .3s;
+  background:var(--gradient);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
 }
-.edu-card:hover::before{opacity:1}
-.edu-card h3{font-size:1.15rem;margin-bottom:.25rem;letter-spacing:-.3px}
-.edu-card .degree{color:var(--accent);font-size:.9rem;font-weight:500;margin-bottom:.4rem}
-.edu-card .edu-date{color:var(--text3);font-size:.8rem;margin-bottom:.6rem}
-.edu-card .coursework{color:var(--text2);font-size:.85rem;line-height:1.6}
-.edu-card .coursework span{color:var(--text3);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:.25rem}
+.edu-card:hover::before{transform:scaleX(1)}
+.edu-card h3{font-size:1.1rem;margin-bottom:.2rem;letter-spacing:-.3px}
+.edu-card .degree{color:var(--accent);font-size:.88rem;font-weight:500;margin-bottom:.35rem}
+.edu-card .edu-date{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--text3);font-size:.76rem;margin-bottom:.6rem;
+}
+.edu-card .coursework{color:var(--text2);font-size:.84rem;line-height:1.65}
+.edu-card .coursework span{
+  color:var(--text3);font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;
+  display:block;margin-bottom:.3rem;font-family:'JetBrains Mono',monospace;
+}
 
-/* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.5rem}
 .project-card{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:2rem;position:relative;overflow:hidden;
-  transition:all .4s ease;cursor:default;
-  opacity:0;transform:translateY(20px);
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:1.75rem;position:relative;overflow:hidden;
+  transition:all .4s ease;cursor:default;box-shadow:var(--shadow-sm);
+  opacity:0;transform:translateY(16px);
 }
 .project-card.visible{opacity:1;transform:translateY(0)}
-.project-card:hover{border-color:var(--accent2);transform:translateY(-4px)}
+.project-card:hover{border-color:var(--accent2);transform:translateY(-3px);box-shadow:var(--shadow-md)}
 .project-card .project-tag{
-  display:inline-block;padding:.2rem .6rem;border-radius:6px;
-  background:rgba(0,201,255,.1);color:var(--accent2);
-  font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;
+  display:inline-block;padding:.2rem .55rem;border-radius:6px;
+  background:rgba(8,145,178,.08);color:var(--accent2);
+  font-size:.68rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
   margin-bottom:.75rem;
 }
-.project-card h3{font-size:1.1rem;margin-bottom:.5rem;letter-spacing:-.3px}
-.project-card p{color:var(--text2);font-size:.88rem;line-height:1.65}
+[data-theme="dark"] .project-card .project-tag{background:rgba(34,211,238,.1)}
+.project-card h3{font-size:1.05rem;margin-bottom:.5rem;letter-spacing:-.3px}
+.project-card p{color:var(--text2);font-size:.86rem;line-height:1.7}
+.project-link{
+  display:inline-flex;align-items:center;gap:.3rem;
+  margin-top:.75rem;font-size:.82rem;color:var(--accent);
+  text-decoration:none;font-weight:500;
+  transition:gap .3s ease;
+}
+.project-link:hover{gap:.5rem}
+.project-link svg{width:14px;height:14px}
 
-/* SKILLS */
-.skills-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem}
+/* ── SKILLS ── */
+.skills-section{
+  background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem}
 .skill-group{
-  opacity:0;transform:translateY(20px);transition:all .5s ease;
+  opacity:0;transform:translateY(16px);transition:all .5s ease;
 }
 .skill-group.visible{opacity:1;transform:translateY(0)}
 .skill-group h4{
-  font-size:.75rem;text-transform:uppercase;letter-spacing:2px;
-  color:var(--accent);margin-bottom:1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;text-transform:uppercase;letter-spacing:2px;
+  color:var(--accent);margin-bottom:.85rem;font-weight:500;
 }
-.skill-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
 .skill-tag{
-  padding:.35rem .75rem;border-radius:8px;
-  background:rgba(255,255,255,.04);border:1px solid var(--border);
-  font-size:.82rem;color:var(--text2);
-  transition:all .3s ease;
+  padding:.3rem .65rem;border-radius:7px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:.8rem;color:var(--text2);
+  transition:all .3s ease;box-shadow:var(--shadow-sm);
 }
 .skill-tag:hover{
   border-color:var(--accent);color:var(--accent);
-  background:rgba(0,232,123,.06);
-  transform:translateY(-2px);
+  background:var(--accent-soft);
+  transform:translateY(-1px);box-shadow:var(--shadow-md);
 }
 
-/* STATS BAR */
+/* ── STATS BAR ── */
 .stats-bar{
   display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
   padding:3rem 0;margin:2rem 0;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
 }
-.stat{text-align:center;opacity:0;transform:translateY(20px);transition:all .5s ease}
+.stat{text-align:center;opacity:0;transform:translateY(16px);transition:all .5s ease}
 .stat.visible{opacity:1;transform:translateY(0)}
 .stat-number{
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;
+  font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;
   background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
-.stat-label{color:var(--text3);font-size:.78rem;text-transform:uppercase;letter-spacing:1px;margin-top:.25rem}
+.stat-label{
+  color:var(--text3);font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;
+  margin-top:.2rem;font-family:'JetBrains Mono',monospace;
+}
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer{
   padding:3rem 0;text-align:center;
   border-top:1px solid var(--border);
 }
 footer p{color:var(--text3);font-size:.85rem}
-footer .footer-links{display:flex;justify-content:center;gap:2rem;margin-top:1rem}
+footer .footer-cta{
+  font-family:'Space Grotesk',sans-serif;font-size:1.15rem;
+  color:var(--text);margin-bottom:.75rem;font-weight:500;letter-spacing:-.3px;
+}
+footer .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
 footer .footer-links a{
+  display:flex;align-items:center;gap:.4rem;
   color:var(--text2);text-decoration:none;font-size:.85rem;transition:color .3s;
 }
 footer .footer-links a:hover{color:var(--accent)}
+footer .footer-links svg{width:15px;height:15px}
 
-/* MOBILE */
+/* ── RESPONSIVE ── */
 @media(max-width:768px){
   .nav-links{display:none}
+  .mobile-menu-btn{display:block}
   .stats-bar{grid-template-columns:repeat(2,1fr);gap:1.5rem}
   .edu-grid{grid-template-columns:1fr}
-  .hero-contact{flex-direction:column;gap:.75rem}
-  section{padding:4rem 0}
+  .hero-contact{flex-direction:column;gap:.6rem}
+  section{padding:3.5rem 0}
+  .timeline{padding-left:2rem}
+  .timeline-item::before{left:-2rem}
+  .timeline-header{gap:.5rem}
+  .company-badge{width:30px;height:30px;border-radius:8px}
+  .company-badge svg{width:18px;height:18px}
 }
+
+@media(max-width:480px){
+  .container{padding:0 1.25rem}
+  .hero h1{letter-spacing:-1.5px}
+  .projects-grid{grid-template-columns:1fr}
+}
+
+
+/* ── Tab Navigation ── */
+.nav-tabs-container{display:flex;gap:.25rem;background:var(--accent-soft);border-radius:10px;padding:3px}
+.nav-tab{
+  background:none;border:none;cursor:pointer;
+  padding:.4rem 1rem;border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:.82rem;font-weight:500;
+  color:var(--text3);transition:all .3s ease;letter-spacing:.2px;
+}
+.nav-tab.active{background:var(--card);color:var(--accent);box-shadow:var(--shadow-sm)}
+.nav-tab:hover:not(.active){color:var(--text)}
+
+/* ── Insights Page ── */
+#insights-content{display:none}
+.insights-hero{min-height:auto;padding-top:120px;padding-bottom:2rem}
+.insights-hero h1{
+  font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.15;
+  letter-spacing:-2px;margin-bottom:.75rem;
+  animation:fadeInUp .7s ease .2s both;
+}
+.insights-hero .hero-sub{
+  animation:fadeInUp .7s ease .35s both;
+  max-width:580px;
+}
+.insights-intro{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;text-transform:uppercase;letter-spacing:3px;
+  color:var(--accent);margin-bottom:2rem;display:flex;align-items:center;gap:.5rem;
+  animation:fadeInUp .7s ease .5s both;
+}
+.insights-intro::before{content:'';width:20px;height:2px;background:var(--gradient);border-radius:1px}
+
+/* ── Article Cards ── */
+.articles-section{padding:2rem 0 5rem}
+.article{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:2.5rem;margin-bottom:2.5rem;
+  box-shadow:var(--shadow-sm);
+  transition:border-color .3s ease;
+}
+.article:hover{border-color:var(--border-hover)}
+.article-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.article-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.article-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.25rem .65rem;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;font-weight:500;
+}
+.badge-company{background:var(--accent-soft);color:var(--accent)}
+.badge-type{background:rgba(8,145,178,.08);color:var(--accent2)}
+.badge-time{background:var(--bg2);color:var(--text3)}
+.article-title{font-size:1.5rem;letter-spacing:-.7px;margin-bottom:.4rem;line-height:1.25}
+.article-subtitle{color:var(--text2);font-size:.95rem;font-weight:400}
+
+.article h3{
+  font-size:1.05rem;letter-spacing:-.3px;margin:1.75rem 0 .75rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.article h3::before{
+  content:'';width:3px;height:18px;background:var(--gradient);border-radius:2px;flex-shrink:0;
+}
+.article p,.article li{color:var(--text2);font-size:.88rem;line-height:1.75}
+.article p{margin-bottom:.75rem}
+.article ul,.article ol{margin:0 0 1rem 1.2rem}
+.article li{margin-bottom:.35rem}
+.article strong{color:var(--text);font-weight:600}
+.article em.role{
+  display:inline-block;padding:.15rem .5rem;border-radius:4px;
+  background:var(--accent-soft);color:var(--accent);
+  font-style:normal;font-size:.82rem;font-weight:500;
+}
+
+/* ── Callout Boxes ── */
+.callout{
+  background:var(--bg2);border-left:3px solid var(--accent);
+  border-radius:0 10px 10px 0;padding:1.25rem 1.5rem;margin:1.25rem 0;
+}
+.callout-title{
+  font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:600;
+  color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;
+}
+.callout p{margin-bottom:0;font-size:.85rem}
+
+/* ── Diagrams ── */
+.diagram-container{
+  background:var(--bg);border:1px solid var(--border);border-radius:12px;
+  padding:1.75rem;margin:1.5rem 0;overflow-x:auto;
+}
+.diagram-label{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  text-transform:uppercase;letter-spacing:2px;color:var(--text3);
+  margin-bottom:1rem;text-align:center;
+}
+.diagram-flow{
+  display:flex;align-items:center;justify-content:center;
+  gap:.4rem;flex-wrap:wrap;
+}
+.diagram-flow.vertical{flex-direction:column}
+.diagram-node{
+  padding:.55rem 1rem;border-radius:8px;
+  background:var(--card);border:1px solid var(--border);
+  font-size:.78rem;font-weight:500;color:var(--text);
+  text-align:center;min-width:90px;
+  box-shadow:var(--shadow-sm);white-space:nowrap;
+}
+.diagram-node.highlight{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.diagram-node.danger{border-color:#ef4444;background:rgba(239,68,68,.08);color:#ef4444}
+.diagram-node.success{border-color:#22c55e;background:rgba(34,197,94,.08);color:#22c55e}
+.diagram-node.muted{border-color:var(--border);color:var(--text3);border-style:dashed}
+.diagram-arrow{
+  color:var(--text3);font-size:1.1rem;flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;
+}
+.diagram-arrow.down{transform:rotate(90deg)}
+.diagram-group{
+  display:flex;flex-direction:column;gap:.4rem;align-items:center;
+  padding:.75rem;border:1px dashed var(--border);border-radius:10px;
+}
+.diagram-group-label{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:var(--text3);text-transform:uppercase;letter-spacing:1px;
+}
+
+/* ── Phase Timeline ── */
+.phase-timeline{margin:1.25rem 0}
+.phase{
+  display:flex;gap:1rem;padding:.75rem 0;
+  border-left:2px solid var(--border);padding-left:1.25rem;
+  position:relative;
+}
+.phase::before{
+  content:'';position:absolute;left:-5px;top:1rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);
+}
+.phase-label{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  color:var(--accent);font-weight:500;white-space:nowrap;min-width:80px;
+}
+.phase-content{font-size:.85rem;color:var(--text2);line-height:1.6}
+
+/* ── Risk Table ── */
+.risk-table{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;font-size:.82rem}
+.risk-table th{
+  background:var(--bg2);padding:.6rem .75rem;text-align:left;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:500;
+  border-bottom:1px solid var(--border);
+}
+.risk-table th:first-child{border-radius:8px 0 0 0}
+.risk-table th:last-child{border-radius:0 8px 0 0}
+.risk-table td{padding:.6rem .75rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.risk-high{color:#ef4444;font-weight:600}
+.risk-med{color:#f59e0b;font-weight:600}
+.risk-low{color:#22c55e;font-weight:600}
+
+/* ── Incident Timeline ── */
+.incident-timeline{margin:1rem 0}
+.incident-row{
+  display:flex;gap:.75rem;padding:.5rem 0;font-size:.84rem;
+  border-bottom:1px solid var(--border);
+}
+.incident-row:last-child{border-bottom:none}
+.incident-time{
+  font-family:'JetBrains Mono',monospace;font-size:.76rem;
+  color:var(--accent);font-weight:500;white-space:nowrap;min-width:55px;
+}
+.incident-event{color:var(--text2);line-height:1.5}
+
+/* ── Key Takeaways ── */
+.takeaways{
+  background:var(--bg2);border-radius:12px;padding:1.5rem;margin-top:2rem;
+  border:1px solid var(--border);
+}
+.takeaways h3{margin-top:0}
+.takeaways h3::before{background:linear-gradient(135deg,#22c55e,#0891b2)}
+.takeaways li{font-size:.85rem}
+
+/* ── Responsive for articles ── */
+@media(max-width:768px){
+  .article{padding:1.5rem}
+  .diagram-flow{gap:.25rem}
+  .diagram-node{font-size:.7rem;padding:.4rem .6rem;min-width:auto}
+  .phase{flex-direction:column;gap:.25rem}
+  .incident-row{flex-direction:column;gap:.15rem}
+  .risk-table{font-size:.75rem}
+}
+
 </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+<canvas id="network-canvas"></canvas>
 
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
 <div class="container">
-  <div class="nav-logo">SR<span>.</span></div>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#skills">Skills</a></li>
-  </ul>
+  <div class="nav-tabs-container">
+    <button class="nav-tab active" data-tab="portfolio" onclick="switchTab('portfolio')">Portfolio</button>
+    <button class="nav-tab" data-tab="insights" onclick="switchTab('insights')">Insights</button>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links" id="portfolioNav">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
+      <!-- Sun icon -->
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <!-- Moon icon -->
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+      </svg>
+    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </div>
 </nav>
 
+<div id="portfolio-content">
 <!-- HERO -->
 <section class="hero">
 <div class="container">
 <div class="hero-content">
-  <div class="hero-label"><span class="dot"></span> Open to Full-Time TPM Roles</div>
+  <div class="hero-label"><span class="status-dot"></span> Open to Full-Time TPM Roles</div>
   <h1>Seshasayi <span class="gradient-text">Rangaraj</span></h1>
   <p class="hero-sub">Engineering Management professional with 5+ years delivering enterprise SaaS platforms and complex technical programs. Former engineering lead at Oracle. Technical Program Manager Intern on the Megapack Firmware team at Tesla.</p>
   <div class="hero-contact">
-    <a href="mailto:rangaraj.seshasayi@gmail.com">
-      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      rangaraj.seshasayi@gmail.com
+    <a href="mailto:seshasayi.rangaraj@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      seshasayi.rangaraj@gmail.com
     </a>
     <a href="tel:+17654127539">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.65 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.29 1.54.52 2.35.65a2 2 0 011.72 2.01z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.65 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.29 1.54.52 2.35.65a2 2 0 011.72 2.01z"/></svg>
       (765) 412-7539
     </a>
     <a>
-      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Palo Alto, CA
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Sunnyvale, CA
+    </a>
+  </div>
+  <div class="hero-socials">
+    <a href="https://www.linkedin.com/in/seshasayi-rangaraj" target="_blank" class="social-btn" title="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://github.com/sesh1810" target="_blank" class="social-btn" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
     </a>
   </div>
 </div>
@@ -350,7 +726,7 @@ footer .footer-links a:hover{color:var(--accent)}
   <div class="stat"><div class="stat-number" data-target="5">0</div><div class="stat-label">Years Experience</div></div>
   <div class="stat"><div class="stat-number" data-target="13.5" data-prefix="$" data-suffix="M">$0M</div><div class="stat-label">Impact Quantified</div></div>
   <div class="stat"><div class="stat-number" data-target="22500" data-suffix="+">0</div><div class="stat-label">Units Analyzed</div></div>
-  <div class="stat"><div class="stat-number" data-target="1" data-prefix="" data-suffix="">0</div><div class="stat-label">Patent Co-Authored</div></div>
+  <div class="stat"><div class="stat-number" data-target="1">0</div><div class="stat-label">Patent Co-Authored</div></div>
 </div>
 </div>
 
@@ -366,12 +742,17 @@ footer .footer-links a:hover{color:var(--accent)}
 
   <!-- Tesla -->
   <div class="timeline-item">
-    <div class="timeline-company">
-      <h3>Tesla</h3>
-      <span class="location">Palo Alto, CA</span>
+    <div class="timeline-header">
+      <div class="company-badge">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABdklEQVR42u2by23DMAxAqUBDxB6jPcQ9dLPeOkQWKlBf0i1ij6GeAhSBa31MSkH8CPgmicwjRdoK5UIIsmc5yM4FAADYuXjLxaduUMmw/Tw6KxudVhWYuuFTRD4qOe6nn8fX5gBSPLzVe9Y6igCsGbVkzN/xMWNjY3N1m0XAf4Zu8Vju3KkbLiLysiUKVHJASbK7N1hjjYfMASk/QGudJhEQMz53e+TO2RoFXqNG3xupWbfXYGjoOWgbafnSYqHHWxhnKdp6+BiqqSzFe7UiiQgAAAAA0ARAJMm97zoC+nn8YgsAAAAAeHoAS5Wg9iswEQAAAACgNYDzIwBwLTtEboecrSoAWwAAAACAo02OLQAAAAAAAAAAAAAAAAAAAEC4LyAlTZGxtteUttilMWtHZSlrJEkIIfu5Hk/hejyFkrm3+RpjNB5vcND5LSJDSXN0jgdTo7H6lZl+Ht9K/hts1XHua90TKmmatuxBFo7EKIMAAAAAACC/y62FY6m5syYAAAAASUVORK5CYII=" alt="Tesla" style="width:24px;height:24px;object-fit:contain">
+      </div>
+      <div class="timeline-company">
+        <h3>Tesla</h3>
+        <span class="location">Palo Alto, CA</span>
+      </div>
     </div>
     <div class="timeline-role">Technical Program Manager Intern, Service Engineering</div>
-    <div class="timeline-date">Jan 2026 - Dec 2026</div>
+    <div class="timeline-date">Jan 2026 &mdash; Dec 2026</div>
     <ul class="timeline-bullets">
       <li>Quantified $13.5M in manufacturing quality losses across 22,500+ Megapack units, directly driving deployment of Tesla One Vision &mdash; a computer vision system now autonomously detecting quality defects on the factory production line in real time</li>
       <li>Drove pricing and go-to-market strategy for Tesla Powerwall 2 Asset buyback program, optimizing recovery value for key clients</li>
@@ -381,12 +762,17 @@ footer .footer-links a:hover{color:var(--accent)}
 
   <!-- Oracle Senior -->
   <div class="timeline-item">
-    <div class="timeline-company">
-      <h3>Oracle Corporation</h3>
-      <span class="location">Bangalore, India</span>
+    <div class="timeline-header">
+      <div class="company-badge">
+        <img src="data:image/png;base64,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" alt="Oracle" style="width:24px;height:24px;object-fit:contain">
+      </div>
+      <div class="timeline-company">
+        <h3>Oracle Corporation</h3>
+        <span class="location">Bangalore, India</span>
+      </div>
     </div>
     <div class="timeline-role">Senior Member of Technical Staff</div>
-    <div class="timeline-date">Sep 2022 - Jul 2025</div>
+    <div class="timeline-date">Sep 2022 &mdash; Jul 2025</div>
     <ul class="timeline-bullets">
       <li>Led programs that integrated agentic AI capabilities into production systems to improve deployment speed by 70% and provide clearer lifecycle visibility for thousands of enterprise environments</li>
       <li>Partnered with clinicians and product teams to identify workflow failure points, launching an AI-assisted solution that reduced operational friction by 35% and improved day-to-day productivity for 10,000 users</li>
@@ -397,16 +783,40 @@ footer .footer-links a:hover{color:var(--accent)}
 
   <!-- Oracle MTS -->
   <div class="timeline-item">
-    <div class="timeline-company">
-      <h3>Oracle Corporation</h3>
-      <span class="location">Bangalore, India</span>
+    <div class="timeline-header">
+      <div class="company-badge">
+        <img src="data:image/png;base64,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" alt="Oracle" style="width:24px;height:24px;object-fit:contain">
+      </div>
+      <div class="timeline-company">
+        <h3>Oracle Corporation</h3>
+        <span class="location">Bangalore, India</span>
+      </div>
     </div>
     <div class="timeline-role">Member of Technical Staff</div>
-    <div class="timeline-date">Sep 2020 - Sep 2022</div>
+    <div class="timeline-date">Sep 2020 &mdash; Sep 2022</div>
     <ul class="timeline-bullets">
       <li>Managed executive-level escalations by diagnosing system issues, driving cross-functional alignment, and reducing downtime by 65%, improving customer NPS by 10%</li>
       <li>Co-patented a load-balancing and rate-limiting mechanism that mitigated system vulnerabilities and delivered $4M in annual operational savings</li>
       <li>Reduced compliance and security risk by 60% by designing controlled rollout systems using feature flags for high-sensitivity deployments</li>
+    </ul>
+  </div>
+
+  <!-- NUS -->
+  <div class="timeline-item">
+    <div class="timeline-header">
+      <div class="company-badge">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAABACAYAAAB8zKu7AAAJHElEQVR42u1ce1BTVxr/JYEgiFRG6LpqCIpB3aIssauuClOFVtiuUKx2y9QHs3S1ropVFwQECY+CtFUs2rEyy05dqe4Uq+K2UxlFLNG6soJdZJdnlbdWYhHCw5DA2T9iLvcSHkmAFMv5zWSSc+55/s53vu8737nAI4QQUPwk4FMKKPmUfApKPiWfgpJPyaeg5FPyKSj5lHwKSj4ln4KS/0zBwpjCrW2dZhmUna11v32y84caoyltDFXuvSPZSM26CSsBHwI+D909BI2tKhSe2Aapm7PR8+QZE8938o4ZdeK7ewga8hKZtP3ySEyy6pWRyq9jYSXsX2ZUXRpI/OJQV9kMUnu033HX5iYYND92uZVvfYCqB61Djn2wtoct+WyCklxL4OlQDhWxxoHSpchrtcfGX1bjj+JbUBFrXPlhNlKq5+jVrfRMhJVMu96KvTxIb0Ub1bfEL87oSQ4XbOL76zvz7DVEfZxjHp3fqBFi0/HzSLWIQoQiGBln0lASrED4J+lw+fJ3uOiSjG0Zn+vVy1n8FZSdWgnTSdle53Kj+zfHDmTvvKEke/2a5SYJxLAMbu39ZijbVbAQaJupud8MybRJ+K68od/yMxavBc/GBeun/oDJQiVaLeZig0eHwbuNjdSMHLOQL+DzOBI+ZrydtP1B+DByHZOeL5mG/X/yQXzoar2yn3tcxUSfd0A6vkdseACuLz0HO00Zuuq+QqVn4pB9xW725pJ/6ppZyGcvetTHOZAXlI0N8uUF5fjmZq/a0HT3oLisDrWNj/TKLvlQDmf/VDikEFi5v4onilo4pBBIb0XDYkeNYTutz9Y2h/ppvpbMSb8V+RmcvGPAc9r+05K/fs1y7ApZ1Wu9BXy8HxUEz0Vz9aSnq0Kuda8849FVIYeV2As8z3gAwOOjK9Gh7h6z6mfLay/q5Ykk9hzbZVbyH8XN5nzUdy/p5bH1pmCKGBOEAoiEagCA7ZZzEAnVmGPVhimxVbCxFBjUb0NeIpQqjVnVz74dAajNTUBdW9eADsCm8L+N7iGLWXWhGh75QUy6Q92Ng/P+h6gKN46B4nT02qcgchmT7mn/EbW5Cehp/1HPlzdEFbAlzsErCor8pFFfBHIzBQAgXXsAiuZ2zrO8wntobes06CA4LPL7wsZSgJiq+RDwB1+wgbaoMcTrcDQyENuTzzH98xaG4cmNZLMY4aIzEcyJ2C2gd9HdApKMcjmNmrWD/USm49HC9BWGHbr8faTYJMtiFk40eYLZYzN2ttaozU0wWe+PSGCtta0TPNedkBeUgbcwDDz3PUPW0XT3jLgnIvGL+/lHNS9cLmJ+ewcfhltAEkQiOyTtPwRfxxaIHGzg5B3DIbg0Sgplghh3982Dk3cMZr0Sy3gLvMV7TZ7A0chAozykgfpi7zh2m0ONzdVPNqAnNio6f9n1N5CSuQh7MjJRWfcIHepulHtzwwke+UGY9UosanMT0B5vj3lJzVr9DqAWQE19E8QzHJGakYPdcf80mXx/Hym2vnd2QEOv85B0qkFkK4STdwxWLJyJ+NDVCHw3A4rmdk59fx9pr616Wh4A6oqakJ21GTPFU5GemYuz+eWceuyA4KhJ/gTeI/zZ5ToTVmC7iRN4vQcsnWtmm/02pGsPoKikGhcuF8HVT4b7h9fg/HZfONpPhPpeGpQJYpMXwJBJ9zWEeYX34LkpjeO1KFUavXJs91IkdcT25HN49Z1jyL5WwSHelNiOSZI/cX8zHsXNhoNXFEP87cczcLLaDYHTq/B2sRQ2lsDxd321LlrhB0xdqZvzU8mScaWAtBqk14cTztWVqalvwtmcInwpL8UfVrnjzdVLBnQRde6lrl6OvARV9x5g9sypg9bDSMfzea47QSo+Yk6WG+u3YU7uG7CxFECp0mDuRA22/qoU0cUeAID/vvR3dPVYDtiekK9GfecUbKgMxq2sUABAwOY0ZKeHYjzAKPL7HmaUCWJ09VhyDlxs3PY6PWh7bSE3IJ7h2CdeVKYXngC9w9W35i9c3TggyVeXnNFfjMczOOkceYlemfFCvNHkn5Ct09Ohde3P46HKTq/sc09jOEK+Gru/84VHfhAKm6dByFcb5LaxXb0Ll4twp7Jx5La7604A2uvBZ4Z8fx8p52ZH1aXBr9//FvOSihhjplRpcNvrNH7/bSA88oMw98oG7U1XYCa2vngD6+t6D2B3yuo57TcpVf32O1M8lZP2Dj6MoS44VF29wTfewrAh55Z+Oq93XJWNmL4imgmWpWbkMAumi6Ky/X+e+x5OfbOccPteZMtPhKLq5SwAwL86JiFguSsa8hJhIeDj2K3fAgCy00PRFnIDAJBkwQ0lPLjSv8cyXzINFy7+u9cDUauHHJuAHWiy6DNNe20oIq9KwWRNdXyO+b1g7UH4/GYWfjFZ68mww+a7Qlahpr6J01zhZzuwZe8XJkTqTEB13cN+8zeGZRCFzIUoZC5E4hvLeZZ/s5S0HHEm017aRwghxOP1ZKKQuRBI/0IIIcz3eIJJkr90w0f95kdYaF/X2N0ehYqvufrbvcAPVS3PMweib9yPQd40mzkDnNwXgHGHkVxJhcyFJL++jpPXcsSZ1B2SkJYjzkSt6eaUbVF2aKVeEmpwH1gUPr4ln/1KRfrpPNzdN4+5uYo4w43xiP/xJh522CPD+hOERH7K3HIJ+WrY2Vqjpr4JhWd3DR4/L6lmoqctubJ+A16tbZ1MOZ3R1BldnY7WdPdw9DX7DbXWtk6OkR7zkj95WQSjzw/99aJBdSS+sRybgRd2DS7pOpuwYDd5olJzn7HqYsFuQgghxRUNZGNYBiGEkOxLhZzv46euMOXZbenG06LsMHgeI4Fhqx2Itg178QxRM8dPXeEQln+zlCGVvRDFFQ1k8rII0qLsINmXCgkWhZOTX8iZhdQRLVoZzfzWtZuYdp5Rhc8E+YV37pmkh0Uro0d9cn29suKKhjGl80fM4E7xjBxTxD8LGFFvB4vCBzwD6PTyYM+pnz/MVyvkBeV6l+BFJdVw8o4B+c9BvSjmeAZvtP7fjqpLg1mrZGj8/jHnXXkKM5BPQf8mi5JPQcmn5FNQ8in5lHwKSj4ln4KST8mnoORT8iko+T83/B/WWirqDhkwywAAAABJRU5ErkJggg==" alt="NUS" style="width:24px;height:24px;object-fit:contain">
+      </div>
+      <div class="timeline-company">
+        <h3>National University of Singapore</h3>
+        <span class="location">Singapore</span>
+      </div>
+    </div>
+    <div class="timeline-role">Research Collaborator, Biomedical AI</div>
+    <div class="timeline-date">2019 &mdash; 2021</div>
+    <ul class="timeline-bullets">
+      <li>Collaborated with world-renowned neurosurgeons, anesthesiologists, and medical imaging specialists on a high-impact biomed-AI project for Intracerebral Hemorrhage (ICH) detection using deep learning</li>
+      <li>Published peer-reviewed research in <em>Medical &amp; Biological Engineering &amp; Computing</em> (Springer), contributing novel approaches to automated CT scan hemorrhage classification</li>
     </ul>
   </div>
 
@@ -418,7 +828,7 @@ footer .footer-links a:hover{color:var(--accent)}
 <section id="projects">
 <div class="container">
 <div class="section-header">
-  <div class="section-label">Research & Projects</div>
+  <div class="section-label">Research &amp; Projects</div>
   <h2 class="section-title">Academic Work</h2>
 </div>
 <div class="projects-grid">
@@ -427,6 +837,10 @@ footer .footer-links a:hover{color:var(--accent)}
     <span class="project-tag">AI / Cloud</span>
     <h3>AI-Driven Datacenter Resource Orchestrator</h3>
     <p>Designed an AI-driven datacenter orchestration platform that optimizes global workload placement for cost, latency, and carbon efficiency.</p>
+    <a href="https://cloud-ops-view.lovable.app/" target="_blank" class="project-link">
+      View Demo
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+    </a>
   </div>
 
   <div class="project-card">
@@ -438,7 +852,11 @@ footer .footer-links a:hover{color:var(--accent)}
   <div class="project-card">
     <span class="project-tag">Biomedical AI</span>
     <h3>ICH Detection Research &mdash; NUS Singapore</h3>
-    <p>Collaborated with world-renowned neurosurgeons, anesthesiologists, and medical imaging specialists to drive a high-impact biomed-AI project on Intracerebral Hemorrhage detection. Published in Medical & Biological Engineering & Computing.</p>
+    <p>Collaborated with world-renowned neurosurgeons, anesthesiologists, and medical imaging specialists to drive a high-impact biomed-AI project on Intracerebral Hemorrhage detection. Published in Medical &amp; Biological Engineering &amp; Computing.</p>
+    <a href="https://link.springer.com/article/10.1007/s11517-021-02459-y" target="_blank" class="project-link">
+      Read Paper
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+    </a>
   </div>
 
 </div>
@@ -460,17 +878,17 @@ footer .footer-links a:hover{color:var(--accent)}
     <div class="edu-date">Expected Graduation: May 2027 &mdash; West Lafayette, IN</div>
     <div class="coursework">
       <span>Coursework</span>
-      Technical Product Management, Strategic Management, Project Management, Executive Presence & Influence
+      Technical Product Management, Strategic Management, Project Management, Executive Presence &amp; Influence
     </div>
   </div>
 
   <div class="edu-card">
-    <div class="degree">B.Tech Electronics & Communications</div>
+    <div class="degree">B.Tech Electronics &amp; Communications</div>
     <h3>National Institute of Technology (NITT)</h3>
-    <div class="edu-date">Aug 2016 - Aug 2020 &mdash; Tiruchirappalli, India</div>
+    <div class="edu-date">Aug 2016 &mdash; Aug 2020 &mdash; Tiruchirappalli, India</div>
     <div class="coursework">
       <span>Coursework</span>
-      Probability & Statistics, Real Analysis, Design & Analysis of Experiments; Minor in Management Studies
+      Probability &amp; Statistics, Real Analysis, Design &amp; Analysis of Experiments; Minor in Management Studies
     </div>
   </div>
 
@@ -515,7 +933,7 @@ footer .footer-links a:hover{color:var(--accent)}
   </div>
 
   <div class="skill-group">
-    <h4>Analytics & Viz</h4>
+    <h4>Analytics &amp; Viz</h4>
     <div class="skill-tags">
       <span class="skill-tag">Power BI</span>
       <span class="skill-tag">Tableau</span>
@@ -546,30 +964,493 @@ footer .footer-links a:hover{color:var(--accent)}
 <!-- FOOTER -->
 <footer>
 <div class="container">
-  <p style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;color:var(--text);margin-bottom:.5rem">Let's build something together.</p>
+  <p class="footer-cta">Let's build something together.</p>
   <div class="footer-links">
-    <a href="mailto:rangaraj.seshasayi@gmail.com">Email</a>
-    <a href="https://linkedin.com/in/seshasayi-rangaraj" target="_blank">LinkedIn</a>
+    <a href="mailto:seshasayi.rangaraj@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email
+    </a>
+    <a href="https://www.linkedin.com/in/seshasayi-rangaraj" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/sesh1810" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </a>
   </div>
-  <p style="margin-top:1.5rem;font-size:.75rem">&copy; 2026 Seshasayi Rangaraj</p>
+  <p style="margin-top:1.5rem;font-size:.72rem;font-family:'JetBrains Mono',monospace">&copy; 2026 Seshasayi Rangaraj</p>
 </div>
 </footer>
 
+</div>
+
+<div id="insights-content">
+
+<!-- Insights Hero -->
+<section class="hero insights-hero">
+<div class="container">
+<div class="hero-content">
+  <div class="insights-intro">Thought Pieces</div>
+  <h1>Technical <span class="gradient-text">Insights</span></h1>
+  <p class="hero-sub">Deep dives into complex engineering challenges. How I think about system failures, large-scale migrations, and infrastructure lifecycle management.</p>
+</div>
+</div>
+</section>
+
+<section class="articles-section">
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ARTICLE 1: META - RCA POST-MORTEM              -->
+<!-- ═══════════════════════════════════════════════ -->
+<article class="article">
+<div class="article-header">
+  <div class="article-meta">
+    <span class="article-badge badge-company">Meta</span>
+    <span class="article-badge badge-type">RCA Post-Mortem</span>
+    <span class="article-badge badge-time">8 min read</span>
+  </div>
+  <h2 class="article-title">Diagnosing a Cascading Failure in Instagram Reels Ranking</h2>
+  <p class="article-subtitle">How a routine model update triggered a 4-hour content quality degradation across 340M+ daily active users</p>
+</div>
+
+<div class="article-body">
+
+<h3>Context</h3>
+<p>Instagram Reels serves billions of short-form video recommendations daily through a multi-stage ranking pipeline. The system scores candidate content for relevance, filters it through safety classifiers, and delivers personalized feeds to users across 190+ countries. As <em class="role">Technical Program Manager</em> owning the ranking platform reliability roadmap, this post-mortem documents how a subtle regression cascaded through tightly coupled services and what we built to prevent recurrence.</p>
+
+<h3>Problem Statement</h3>
+<p>On a routine Tuesday deployment, Ranking Model v2.7.1 rolled out to production. The update introduced an improved engagement predictor that had passed all offline evaluation benchmarks. Within two hours of full rollout, user-facing content quality degraded significantly &mdash; users reported repetitive, low-relevance, and stale content. The incident lasted 4 hours, affecting an estimated 340M daily active users before the model was rolled back.</p>
+<p>The failure was not in the model itself. It was in how the model's output distribution interacted with a downstream system that nobody expected to be affected.</p>
+
+<h3>System Architecture & Failure Path</h3>
+<div class="diagram-container">
+  <div class="diagram-label">Reels Ranking Pipeline &mdash; Cascade Path</div>
+  <div class="diagram-flow">
+    <div class="diagram-node">Content Pool<br><small style="color:var(--text3)">~2M candidates</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node">Feature Extraction</div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node danger">Ranking Model v2.7.1<br><small>score distribution shifted</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node danger">Safety Classifiers<br><small>3x volume spike &rarr; timeouts</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node muted">Stale Cache Fallback<br><small>6hr-old rankings served</small></div>
+  </div>
+</div>
+
+<h3>Incident Timeline</h3>
+<div class="incident-timeline">
+  <div class="incident-row"><span class="incident-time">T+0</span><span class="incident-event">Model v2.7.1 begins 5% canary rollout to us-east-1 cluster</span></div>
+  <div class="incident-row"><span class="incident-time">T+15m</span><span class="incident-event">Canary metrics nominal. Per-request latency p50/p99, error rate, and throughput all within bounds. <strong>Rollout approved.</strong></span></div>
+  <div class="incident-row"><span class="incident-time">T+45m</span><span class="incident-event">Full production rollout (100%) across all regions</span></div>
+  <div class="incident-row"><span class="incident-time">T+1h50m</span><span class="incident-event">Content Safety team notices moderation queue depth at 3.2x baseline. Initial assessment: possible spam wave</span></div>
+  <div class="incident-row"><span class="incident-time">T+2h15m</span><span class="incident-event">User experience reports surface in internal dashboards &mdash; "repetitive content," "seeing posts from yesterday." SEV-1 incident declared</span></div>
+  <div class="incident-row"><span class="incident-time">T+2h40m</span><span class="incident-event">Ranking team correlates safety queue spike with model rollout timeline. Investigation shifts from safety to ranking</span></div>
+  <div class="incident-row"><span class="incident-time">T+3h10m</span><span class="incident-event"><strong>Root cause identified:</strong> v2.7.1 feature normalization uses updated population statistics. Score distribution compressed &mdash; 28% more candidates fall into the "borderline" safety band (scores 0.45&ndash;0.65)</span></div>
+  <div class="incident-row"><span class="incident-time">T+3h25m</span><span class="incident-event">Model rolled back to v2.7.0. Safety queue begins draining</span></div>
+  <div class="incident-row"><span class="incident-time">T+4h</span><span class="incident-event">Full recovery confirmed. Stale caches flushed across all edge PoPs</span></div>
+</div>
+
+<h3>Root Cause Analysis: 5 Whys</h3>
+<ol>
+  <li><strong>Why did content quality degrade?</strong> &rarr; Safety classifiers timed out, triggering a fallback to stale cached rankings (some up to 6 hours old)</li>
+  <li><strong>Why did safety classifiers time out?</strong> &rarr; They received 3.2x their normal volume of "borderline" content requiring full classification passes</li>
+  <li><strong>Why did borderline volume spike?</strong> &rarr; The ranking model's output score distribution shifted, compressing more candidates into the 0.45&ndash;0.65 safety threshold band</li>
+  <li><strong>Why did scores shift?</strong> &rarr; Model v2.7.1 used updated feature normalization statistics (retrained population means) without recalibrating the downstream threshold boundaries</li>
+  <li><strong>Why wasn't this caught in testing?</strong> &rarr; Canary evaluation monitored per-request performance (latency, errors) but not <strong>output distribution shape</strong>. The model produced valid scores &mdash; they were just distributed differently</li>
+</ol>
+
+<div class="callout">
+  <div class="callout-title">Core Insight</div>
+  <p>The failure wasn't in any single component. Every service behaved correctly in isolation. The cascade emerged from an <strong>implicit contract</strong> between ranking and safety: the safety system was provisioned for the historical score distribution, not the one v2.7.1 produced. No alert fired because no individual metric crossed its threshold.</p>
+</div>
+
+<h3>Remediation Plan</h3>
+<p>I drove the following action items across Ranking, Safety, and Infrastructure teams with a 30-day completion target:</p>
+<ol>
+  <li><strong>Score Distribution Monitoring</strong> &mdash; Added KL-divergence tracking between canary and baseline score distributions. Canary auto-halts if divergence exceeds 0.15 for 10 consecutive minutes</li>
+  <li><strong>Circuit Breaker</strong> &mdash; Implemented a circuit breaker between ranking and safety services. When safety queue depth exceeds 2x baseline, the system degrades gracefully by tightening the ranking cutoff rather than flooding safety</li>
+  <li><strong>Cache Freshness SLO</strong> &mdash; Established a 30-minute maximum staleness policy for fallback caches. Cache entries older than the SLO are discarded rather than served, triggering a degraded-but-fresh ranking path</li>
+  <li><strong>Cross-Service Contract Testing</strong> &mdash; Introduced integration tests that validate output distribution assumptions between coupled services before any model deployment</li>
+</ol>
+
+<div class="takeaways">
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li><strong>Monitor contracts, not just components.</strong> Per-service health metrics missed a failure that lived in the interaction between services</li>
+    <li><strong>Fallback systems need SLOs too.</strong> A stale cache served "successfully" for hours &mdash; but success without freshness is a silent failure</li>
+    <li><strong>Distribution shifts are invisible to threshold alerts.</strong> Every individual score was valid. The problem was the shape of the aggregate distribution</li>
+  </ul>
+</div>
+
+</div>
+</article>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ARTICLE 2: WAYVE - MIGRATION RUNBOOK           -->
+<!-- ═══════════════════════════════════════════════ -->
+<article class="article">
+<div class="article-header">
+  <div class="article-meta">
+    <span class="article-badge badge-company">Wayve</span>
+    <span class="article-badge badge-type">Migration Runbook</span>
+    <span class="article-badge badge-time">9 min read</span>
+  </div>
+  <h2 class="article-title">Zero-Downtime Migration of Safety-Critical Perception Pipelines</h2>
+  <p class="article-subtitle">Moving autonomous driving inference from a monolithic GPU cluster to cloud-native microservices without compromising safety</p>
+</div>
+
+<div class="article-body">
+
+<h3>Context</h3>
+<p>Wayve's perception system is the sensory cortex of its autonomous vehicles: it processes raw camera, LiDAR, and radar inputs into real-time object detections, lane boundaries, and depth maps that feed directly into the motion planning stack. As the fleet scales from 25 to 300+ test vehicles across London and other cities, the current monolithic architecture cannot scale. As <em class="role">Technical Program Manager</em> leading this migration, the challenge is not just technical &mdash; it's coordinating across perception engineering, safety validation, fleet operations, and regulatory compliance to make a zero-downtime transition on a safety-critical system.</p>
+
+<h3>Problem Statement</h3>
+<p>The current perception pipeline runs as a single monolithic process on a custom GPU cluster. Three tightly-coupled inference stages &mdash; object detection (YOLOv8-derived), lane segmentation (custom U-Net), and monocular depth estimation &mdash; share GPU memory and execute sequentially in a single process. This creates three critical scaling bottlenecks:</p>
+<ul>
+  <li><strong>No independent scaling:</strong> A 2x improvement to object detection requires redeploying the entire pipeline, including unchanged models</li>
+  <li><strong>Single point of failure:</strong> A crash in depth estimation kills all three inference stages simultaneously</li>
+  <li><strong>Fleet scaling wall:</strong> The cluster maxes out at ~40 concurrent vehicle streams. Wayve's roadmap requires 300+ by EOY</li>
+</ul>
+<p>The migration must maintain the <strong>hard safety constraint</strong> of &lt;50ms end-to-end inference latency (sensor input to planning output), certified to ASIL-B functional safety standards.</p>
+
+<h3>Architecture: Current vs. Target</h3>
+<div class="diagram-container">
+  <div class="diagram-label">Current &mdash; Monolithic Pipeline</div>
+  <div class="diagram-flow">
+    <div class="diagram-node">Vehicle Sensors<br><small style="color:var(--text3)">Camera + LiDAR + Radar</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node danger" style="min-width:260px">Monolithic GPU Process<br><small>Object Det &bull; Lane Seg &bull; Depth Est</small><br><small style="color:#ef4444">tightly coupled, shared memory</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node">Planning Module</div>
+  </div>
+</div>
+<div class="diagram-container">
+  <div class="diagram-label">Target &mdash; Cloud-Native Microservices</div>
+  <div class="diagram-flow">
+    <div class="diagram-node">Vehicle Sensors</div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-group">
+      <div class="diagram-group-label">Kubernetes GPU Pool</div>
+      <div class="diagram-node success">Object Detection<br><small>independent scaling</small></div>
+      <div class="diagram-node success">Lane Segmentation<br><small>independent scaling</small></div>
+      <div class="diagram-node success">Depth Estimation<br><small>independent scaling</small></div>
+    </div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node highlight">Fusion Service<br><small>aggregates outputs</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node">Planning Module</div>
+  </div>
+</div>
+
+<h3>Migration Phases</h3>
+<div class="phase-timeline">
+  <div class="phase">
+    <span class="phase-label">Phase 1<br>Wk 1&ndash;3</span>
+    <div class="phase-content"><strong>Instrumentation & Baseline.</strong> Instrument the monolithic pipeline with per-stage latency tracing, memory profiling, and output checksums. Establish quantitative baselines: p50/p99 latency per stage, throughput ceiling, and failure modes. These baselines become the acceptance criteria for the new architecture.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 2<br>Wk 4&ndash;8</span>
+    <div class="phase-content"><strong>Parallel Architecture Build.</strong> Deploy the three inference stages as independent Kubernetes services with gRPC interfaces. Introduce a Fusion Service that aggregates outputs and presents a unified interface to Planning. Critical: implement a <strong>latency budget allocator</strong> that dynamically distributes the 50ms budget across services based on current load.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 3<br>Wk 9&ndash;14</span>
+    <div class="phase-content"><strong>Shadow Traffic & Safety Validation.</strong> Run both architectures simultaneously. The new pipeline processes real sensor data in shadow mode, with outputs compared bit-for-bit against the monolith. Safety team runs the full ASIL-B validation suite against the new architecture. Acceptance gate: &lt;0.01% output divergence across 10M inference cycles and zero safety-critical mismatches.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 4<br>Wk 15&ndash;18</span>
+    <div class="phase-content"><strong>Progressive Cutover.</strong> Migrate vehicles in cohorts of 25, starting with the depot test fleet (non-public-road). Each cohort runs on the new pipeline for 72 hours with enhanced monitoring before the next cohort migrates. Rollback is instant: a config flag switches any vehicle back to monolithic processing within one inference cycle.</div>
+  </div>
+</div>
+
+<h3>Risk Register</h3>
+<table class="risk-table">
+  <thead>
+    <tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Network latency between microservices exceeds budget</td>
+      <td><span class="risk-high">High</span></td>
+      <td><span class="risk-med">Medium</span></td>
+      <td>Co-locate services on same GPU node via pod affinity; use shared memory transport (not network) for intra-node communication</td>
+    </tr>
+    <tr>
+      <td>Safety certification delayed by regulatory review</td>
+      <td><span class="risk-high">High</span></td>
+      <td><span class="risk-med">Medium</span></td>
+      <td>Engage safety team in Phase 1 to co-define acceptance criteria; pre-submit documentation in Phase 2</td>
+    </tr>
+    <tr>
+      <td>Output divergence between monolith and microservices</td>
+      <td><span class="risk-med">Medium</span></td>
+      <td><span class="risk-low">Low</span></td>
+      <td>Bit-level comparison in shadow mode; root-cause any divergence before proceeding to Phase 4</td>
+    </tr>
+    <tr>
+      <td>GPU resource contention under peak fleet load</td>
+      <td><span class="risk-med">Medium</span></td>
+      <td><span class="risk-med">Medium</span></td>
+      <td>Load test at 2x projected peak (600 streams) during Phase 3; implement priority-based GPU scheduling</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="callout-title">Stakeholder Coordination</div>
+  <p>The hardest part of this migration isn't the Kubernetes manifest. It's that the Perception team, Safety team, Fleet Ops, and Regulatory each have veto power, different risk tolerances, and competing timelines. The TPM's job is to create a shared definition of "safe enough to proceed" <em>before</em> Phase 3 begins, not during it.</p>
+</div>
+
+<div class="takeaways">
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li><strong>Safety-critical migrations require parallel validation, not sequential.</strong> You cannot test-then-cutover; you must run both systems simultaneously long enough to build statistical confidence</li>
+    <li><strong>The rollback plan IS the migration plan.</strong> Every phase must be instantly reversible. If rollback is hard, the migration architecture is wrong</li>
+    <li><strong>Define acceptance criteria before building.</strong> Phase 1's instrumentation work prevents Phase 3 from becoming an open-ended debate about what "good enough" means</li>
+  </ul>
+</div>
+
+</div>
+</article>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ARTICLE 3: STRIPE - LIFECYCLE DEPRECATION PLAN -->
+<!-- ═══════════════════════════════════════════════ -->
+<article class="article">
+<div class="article-header">
+  <div class="article-meta">
+    <span class="article-badge badge-company">Stripe</span>
+    <span class="article-badge badge-type">Lifecycle Plan</span>
+    <span class="article-badge badge-time">7 min read</span>
+  </div>
+  <h2 class="article-title">Deprecating Legacy Infrastructure Without Breaking the Internet</h2>
+  <p class="article-subtitle">An 18-month lifecycle plan for sunsetting Stripe's original payment gateway while protecting 12,000 merchant integrations</p>
+</div>
+
+<div class="article-body">
+
+<h3>Context</h3>
+<p>Stripe's original payment processing gateway &mdash; internally called "Gateway Classic" &mdash; was built during the company's first year. A decade later, it still processes 8% of total transaction volume from approximately 12,000 long-tail merchants. As <em class="role">Technical Program Manager</em> leading the deprecation initiative, the challenge is that these merchants depend on undocumented API behaviors, legacy webhook formats, and error codes that don't exist in the modern gateway. A forced cutover would break payment processing for small businesses that depend on Stripe as their sole payment provider.</p>
+
+<h3>Problem Statement</h3>
+<p>Gateway Classic presents three escalating risks:</p>
+<ul>
+  <li><strong>Security:</strong> Uses TLS 1.1, approaching end-of-support. PCI DSS 4.0 requires TLS 1.2+ by March next year. Non-compliance exposes Stripe to audit findings and merchant liability</li>
+  <li><strong>Operational cost:</strong> Requires 3.2x the engineering maintenance hours per transaction vs. the modern gateway. Two dedicated engineers spend ~60% of their time on Classic-specific incident response</li>
+  <li><strong>Scaling ceiling:</strong> No horizontal scaling capability. During Black Friday, Classic hits its throughput limit and begins dropping transactions for its merchants</li>
+</ul>
+<p>The constraint: zero payment processing interruptions. Even one dropped transaction during migration means lost revenue for a small business owner. And unlike a B2B SaaS migration, we cannot schedule "maintenance windows" &mdash; payments happen 24/7.</p>
+
+<h3>Migration Architecture</h3>
+<div class="diagram-container">
+  <div class="diagram-label">Compatibility Shim Architecture</div>
+  <div class="diagram-flow">
+    <div class="diagram-group">
+      <div class="diagram-group-label">Legacy Merchants (12K)</div>
+      <div class="diagram-node muted">Classic API Calls<br><small>TLS 1.1, legacy error codes</small></div>
+    </div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node highlight" style="min-width:160px">Compatibility Shim<br><small>translates requests/responses<br>maps error codes<br>converts webhook formats</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node success">Modern Gateway<br><small>TLS 1.3, scalable,<br>PCI DSS 4.0 compliant</small></div>
+  </div>
+</div>
+<p>The Compatibility Shim is the key architectural decision. Rather than forcing merchants to rewrite their integrations, we build a translation layer that accepts Classic API calls and converts them to modern gateway requests. This lets us decommission Classic's infrastructure without requiring any merchant code changes for the initial cutover.</p>
+
+<h3>Phased Deprecation Plan</h3>
+<div class="phase-timeline">
+  <div class="phase">
+    <span class="phase-label">Phase 1<br>Month 1&ndash;3</span>
+    <div class="phase-content"><strong>Audit & Shim Development.</strong> Catalog every undocumented API behavior, legacy error code, and custom webhook format used by Classic merchants. Build the Compatibility Shim with 100% behavioral parity. Instrument Classic to capture full request/response pairs for replay testing.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 2<br>Month 4&ndash;6</span>
+    <div class="phase-content"><strong>Shadow Traffic Validation.</strong> Mirror 100% of Classic traffic through the Shim &rarr; Modern Gateway path. Compare responses. Acceptance gate: &lt;0.001% response divergence across 30 days (excluding expected timing differences). Fix every divergence &mdash; no exceptions.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 3<br>Month 7&ndash;12</span>
+    <div class="phase-content"><strong>Tiered Migration.</strong> Three merchant tiers based on integration complexity:
+      <br>&bull; <strong>Self-serve</strong> (8,200 merchants): Simple integrations. Auto-migrate through Shim with email notification. Provide one-click rollback button in dashboard
+      <br>&bull; <strong>Assisted</strong> (3,400 merchants): Medium complexity. Dedicated migration guide, sandbox environment, and support ticket priority queue
+      <br>&bull; <strong>White-glove</strong> (400 merchants): High complexity or high revenue. Assigned migration engineer, custom testing, direct Slack channel for live support</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Phase 4<br>Month 13&ndash;18</span>
+    <div class="phase-content"><strong>Shim Sunset & Direct Migration.</strong> Incentivize merchants to adopt the modern API directly (shim adds ~8ms latency). Provide automated code migration tools, updated SDKs, and migration credits. Target: 80%+ merchants migrated off shim to direct modern API. Decommission Classic infrastructure. Shim remains for long-tail.</div>
+  </div>
+</div>
+
+<h3>Communication Strategy</h3>
+<p>Deprecation is as much a communication challenge as a technical one. The plan follows a structured cadence:</p>
+<ul>
+  <li><strong>T-12 months:</strong> Public blog post announcing deprecation timeline. No merchant action required yet</li>
+  <li><strong>T-9 months:</strong> Personalized email to each merchant with their specific migration tier and timeline. Link to migration guide</li>
+  <li><strong>T-6 months:</strong> Dashboard banner in Stripe console. Sandbox environment available for testing</li>
+  <li><strong>T-3 months:</strong> Direct outreach to merchants who haven't begun migration. Offer migration support calls</li>
+  <li><strong>T-1 month:</strong> Final notice with specific cutover date. Escalation path for merchants needing extensions</li>
+</ul>
+
+<div class="callout">
+  <div class="callout-title">The Long Tail Problem</div>
+  <p>The last 2% of merchants will take 50% of the effort. These are merchants with custom integrations built by contractors who are no longer available, merchants in industries with regulatory constraints on software changes, or merchants who simply don't read emails. The white-glove tier exists specifically for this long tail. Budget for it from day one.</p>
+</div>
+
+<div class="takeaways">
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li><strong>Build the bridge before closing the road.</strong> The Compatibility Shim lets us decommission legacy infrastructure without requiring merchant action. Migration becomes optional (but incentivized), not forced</li>
+    <li><strong>Segment merchants by integration complexity, not revenue.</strong> A $500/month merchant with a deeply custom integration needs more support than a $50,000/month merchant using the standard SDK</li>
+    <li><strong>Deprecation timelines are communication artifacts, not engineering artifacts.</strong> The technical migration can happen in 6 months. The 18-month timeline exists to give merchants time to plan, budget, and execute their side of the change</li>
+  </ul>
+</div>
+
+</div>
+</article>
+
+</div>
+</section>
+
+</div>
+
 <script>
-// Intersection Observer for scroll animations
+// ── Theme Toggle ──
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const saved = localStorage.getItem('theme');
+if (saved) html.setAttribute('data-theme', saved);
+
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  updateCanvasColors();
+});
+
+// ── Network Canvas Animation ──
+const canvas = document.getElementById('network-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animId;
+
+function getCanvasColors() {
+  const style = getComputedStyle(document.documentElement);
+  return {
+    dot: style.getPropertyValue('--canvas-dot').trim() || 'rgba(37,99,235,.12)',
+    line: style.getPropertyValue('--canvas-line').trim() || 'rgba(37,99,235,.04)'
+  };
+}
+let canvasColors = getCanvasColors();
+function updateCanvasColors() {
+  setTimeout(() => { canvasColors = getCanvasColors(); }, 50);
+}
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initParticles();
+}
+
+function initParticles() {
+  const count = Math.min(Math.floor((canvas.width * canvas.height) / 18000), 80);
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.8
+    });
+  }
+}
+
+function drawNetwork() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const maxDist = 150;
+
+  // Draw lines
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < maxDist) {
+        const opacity = 1 - dist / maxDist;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = canvasColors.line.replace(/[\d.]+\)$/, (opacity * 0.08) + ')');
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw dots
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = canvasColors.dot;
+    ctx.fill();
+
+    // Move
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+  });
+
+  animId = requestAnimationFrame(drawNetwork);
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+drawNetwork();
+
+// ── Scroll Progress ──
+const scrollProgress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollProgress.style.width = pct + '%';
+});
+
+// ── Nav scroll shadow ──
+const mainNav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  mainNav.classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ── Active nav link ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.offsetTop - 120;
+    if (window.scrollY >= top) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ── Intersection Observer for animations ──
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.timeline-item, .edu-card, .project-card, .skill-group, .stat').forEach(el => {
   observer.observe(el);
 });
 
-// Counter animation for stats
+// ── Counter Animation ──
 let statsCounted = false;
 const statsObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -595,7 +1476,6 @@ function animateCounters() {
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * target;
-
       if (target >= 1000) {
         el.textContent = prefix + Math.floor(current).toLocaleString() + suffix;
       } else if (isDecimal) {
@@ -603,25 +1483,59 @@ function animateCounters() {
       } else {
         el.textContent = prefix + Math.floor(current) + suffix;
       }
-
       if (progress < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);
   });
 }
 
-// Stagger animation delays
-document.querySelectorAll('.timeline-item').forEach((el, i) => { el.style.transitionDelay = i * 0.15 + 's'; });
-document.querySelectorAll('.project-card').forEach((el, i) => { el.style.transitionDelay = i * 0.1 + 's'; });
-document.querySelectorAll('.edu-card').forEach((el, i) => { el.style.transitionDelay = i * 0.1 + 's'; });
-document.querySelectorAll('.skill-group').forEach((el, i) => { el.style.transitionDelay = i * 0.1 + 's'; });
-document.querySelectorAll('.stat').forEach((el, i) => { el.style.transitionDelay = i * 0.1 + 's'; });
+// ── Stagger delays ──
+document.querySelectorAll('.timeline-item').forEach((el, i) => { el.style.transitionDelay = i * 0.12 + 's'; });
+document.querySelectorAll('.project-card').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
+document.querySelectorAll('.edu-card').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
+document.querySelectorAll('.skill-group').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
+document.querySelectorAll('.stat').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
 
-// Nav shadow on scroll
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.boxShadow =
-    window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.3)' : 'none';
+// ── Mobile menu ──
+const mobileBtn = document.getElementById('mobileMenuBtn');
+mobileBtn.addEventListener('click', () => {
+  const navLinksEl = document.querySelector('.nav-links');
+  const isOpen = navLinksEl.style.display === 'flex';
+  if (isOpen) {
+    navLinksEl.style.display = 'none';
+  } else {
+    navLinksEl.style.cssText = 'display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--nav-bg);backdrop-filter:blur(24px);padding:1rem 2rem;gap:.8rem;border-bottom:1px solid var(--border);z-index:99;';
+  }
 });
+
+
+// ── Tab Switching ──
+function switchTab(tab) {
+  const portfolioContent = document.getElementById('portfolio-content');
+  const insightsContent = document.getElementById('insights-content');
+  const portfolioNav = document.getElementById('portfolioNav');
+
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.nav-tab[data-tab="${tab}"]`).classList.add('active');
+
+  if (tab === 'portfolio') {
+    portfolioContent.style.display = 'block';
+    insightsContent.style.display = 'none';
+    if (portfolioNav) portfolioNav.style.display = 'flex';
+  } else {
+    portfolioContent.style.display = 'none';
+    insightsContent.style.display = 'block';
+    if (portfolioNav) portfolioNav.style.display = 'none';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Handle direct URL with hash
+if (window.location.hash === '#insights') {
+  switchTab('insights');
+}
+
 </script>
 </body>
 </html>
