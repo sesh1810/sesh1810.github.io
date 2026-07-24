@@ -468,7 +468,7 @@ footer .footer-links svg{width:15px;height:15px}
 .nav-tab:hover:not(.active){color:var(--text)}
 
 /* ── Insights Page ── */
-#insights-content{display:none}
+/* insights content is now inline */
 .insights-hero{min-height:auto;padding-top:120px;padding-bottom:2rem}
 .insights-hero h1{
   font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.15;
@@ -495,6 +495,8 @@ footer .footer-links svg{width:15px;height:15px}
   box-shadow:var(--shadow-sm);
   transition:border-color .3s ease;
 }
+.article{opacity:0;transform:translateY(16px);transition:all .6s ease}
+.article.visible{opacity:1;transform:translateY(0)}
 .article:hover{border-color:var(--border-hover)}
 .article-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
 .article-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
@@ -560,6 +562,8 @@ footer .footer-links svg{width:15px;height:15px}
   font-size:.78rem;font-weight:500;color:var(--text);
   text-align:center;min-width:90px;
   box-shadow:var(--shadow-sm);white-space:nowrap;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease;
 }
 .diagram-node.highlight{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .diagram-node.danger{border-color:#ef4444;background:rgba(239,68,68,.08);color:#ef4444}
@@ -568,11 +572,20 @@ footer .footer-links svg{width:15px;height:15px}
 .diagram-arrow{
   color:var(--text3);font-size:1.1rem;flex-shrink:0;
   font-family:'JetBrains Mono',monospace;
+  opacity:0;transition:opacity .3s ease;
 }
 .diagram-arrow.down{transform:rotate(90deg)}
 .diagram-group{
   display:flex;flex-direction:column;gap:.4rem;align-items:center;
   padding:.75rem;border:1px dashed var(--border);border-radius:10px;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease;
+}
+/* Diagram animate-in when container is visible */
+.diagram-container.visible .diagram-node,
+.diagram-container.visible .diagram-arrow,
+.diagram-container.visible .diagram-group{
+  opacity:1;transform:translateY(0);
 }
 .diagram-group-label{
   font-family:'JetBrains Mono',monospace;font-size:.65rem;
@@ -654,13 +667,10 @@ footer .footer-links svg{width:15px;height:15px}
 <!-- NAV -->
 <nav id="mainNav">
 <div class="container">
-  <div class="nav-tabs-container">
-    <button class="nav-tab active" data-tab="portfolio" onclick="switchTab('portfolio')">Portfolio</button>
-    <button class="nav-tab" data-tab="insights" onclick="switchTab('insights')">Insights</button>
-  </div>
-  <div class="nav-right">
-    <ul class="nav-links" id="portfolioNav">
+  <div class="nav-right" style="width:100%;justify-content:space-between">
+    <ul class="nav-links">
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#case-studies">Case Studies</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -682,7 +692,6 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </nav>
 
-<div id="portfolio-content">
 <!-- HERO -->
 <section class="hero">
 <div class="container">
@@ -819,6 +828,195 @@ footer .footer-links svg{width:15px;height:15px}
       <li>Published peer-reviewed research in <em>Medical &amp; Biological Engineering &amp; Computing</em> (Springer), contributing novel approaches to automated CT scan hemorrhage classification</li>
     </ul>
   </div>
+
+</div>
+</div>
+</section>
+
+<!-- CASE STUDIES (inline) -->
+<section id="case-studies">
+<div class="container">
+<div class="section-header">
+  <div class="section-label">Case Studies</div>
+  <h2 class="section-title">Engineering Through a TPM Lens</h2>
+</div>
+<div class="articles-inline">
+
+<!-- ARTICLE 1: ORACLE - AGENTIC AI IN OIC3 -->
+<article class="article">
+<div class="article-header">
+  <div class="article-meta">
+    <span class="article-badge badge-company">Oracle</span>
+    <span class="article-badge badge-type">Platform Integration</span>
+    <span class="article-badge badge-time">5 min read</span>
+  </div>
+  <h2 class="article-title">Shipping Agentic AI Inside Enterprise Middleware</h2>
+  <p class="article-subtitle">How we brought autonomous AI agents into Oracle Integration Cloud &mdash; and what I'd do differently as a TPM</p>
+</div>
+<div class="article-body">
+
+<h3>What Actually Happened</h3>
+<p>I was a Senior Member of Technical Staff on Oracle Integration Cloud (OIC). In 2024, our team took on a big bet: embedding agentic AI capabilities directly into OIC3, Oracle's middleware platform that thousands of enterprises use to connect their SaaS apps, databases, and on-prem systems.</p>
+<p>The idea was straightforward. Instead of customers hand-wiring every integration flow, an AI agent could understand a business request in natural language, reason about which connectors and APIs to call, execute a multi-step integration plan, and handle errors autonomously. We called it Agentic AI in OIC.</p>
+<p>I built parts of this system as an engineer. Here's the TPM story I now see underneath it.</p>
+
+<h3>The Architecture We Shipped</h3>
+<div class="diagram-container">
+  <div class="diagram-label">Agentic AI in OIC3 &mdash; Integration Flow</div>
+  <div class="diagram-flow">
+    <div class="diagram-node">User Request<br><small style="color:var(--text3)">"sync new Salesforce leads to HubSpot"</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node highlight">AI Agent<br><small>planning + reasoning</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-group">
+      <div class="diagram-group-label">OIC3 Tool Layer</div>
+      <div class="diagram-node success">Connectors<br><small>SaaS, DB, REST, SOAP</small></div>
+      <div class="diagram-node success">Integration Flows<br><small>mappings, transforms</small></div>
+      <div class="diagram-node success">Error Handlers<br><small>retry, fallback, alert</small></div>
+    </div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node">Execution<br><small style="color:var(--text3)">monitored + auditable</small></div>
+  </div>
+</div>
+<p>The agent treats OIC's existing connectors and integration recipes as <strong>tools</strong>. It can discover what's available in a customer's environment, compose a multi-step flow, execute it, and adapt when something fails. The key constraint: every action the agent takes must be auditable and reversible. Enterprise customers expect full traceability on anything touching their production systems.</p>
+
+<h3>The Hard Parts (Where a TPM Was Needed)</h3>
+<p>As an engineer, I focused on making the agent work. Looking back, the organizational complexity dwarfed the technical problems.</p>
+
+<div class="callout">
+  <div class="callout-title">The Real Challenge</div>
+  <p>Three teams owned pieces of this: the AI/ML team building the agent reasoning layer, the core platform team owning OIC's connector infrastructure, and the security team who had to sign off on an AI system making autonomous API calls on behalf of enterprise customers. Nobody had a shared definition of "done."</p>
+</div>
+
+<p>If I'd been the TPM on this program, here's what I would have driven:</p>
+
+<div class="phase-timeline">
+  <div class="phase">
+    <span class="phase-label">Problem 1</span>
+    <div class="phase-content"><strong>No shared success criteria.</strong> The AI team measured agent accuracy. The platform team measured connector uptime. Security measured audit coverage. A TPM's first job: define a single metric everyone agrees on. I'd propose <em>successful autonomous integration completions per day</em>, end-to-end, with security audit passing.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Problem 2</span>
+    <div class="phase-content"><strong>The trust gap with enterprise customers.</strong> Enterprises don't want an AI autonomously calling their Salesforce API. The rollout needed a progressive trust model: start with the agent <em>suggesting</em> integration flows for human approval, then graduate to semi-autonomous execution with guardrails, then full autonomy for low-risk flows only. This sequencing is TPM work.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Problem 3</span>
+    <div class="phase-content"><strong>Connector compatibility wasn't binary.</strong> OIC has 100+ connectors. The agent could use maybe 40 of them reliably at launch. Somebody needed to own the connector certification matrix, prioritize which connectors to onboard next based on customer demand, and communicate clearly what's supported vs. what's coming. Engineers don't naturally do this. TPMs do.</div>
+  </div>
+</div>
+
+<h3>What I'd Ship as a TPM</h3>
+<table class="risk-table">
+  <thead>
+    <tr><th>Workstream</th><th>Owner</th><th>TPM Role</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Agent reasoning + tool selection</td>
+      <td>AI/ML Team</td>
+      <td>Define accuracy thresholds per connector type; gate launches on pass rates</td>
+    </tr>
+    <tr>
+      <td>Connector certification for agent use</td>
+      <td>Platform Team</td>
+      <td>Prioritize certification queue by customer revenue impact; track coverage %</td>
+    </tr>
+    <tr>
+      <td>Security + audit trail for autonomous actions</td>
+      <td>Security Team</td>
+      <td>Co-author the agent permissions model; ensure every agent action is logged and reversible</td>
+    </tr>
+    <tr>
+      <td>Customer rollout + trust building</td>
+      <td>Product + GTM</td>
+      <td>Design the progressive autonomy ladder; run the beta program with 10 design-partner customers</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="takeaways">
+  <h3>What I Learned</h3>
+  <ul>
+    <li><strong>Shipping AI in the enterprise is mostly alignment work.</strong> Getting security, platform, and AI teams to agree on what "safe enough" means took longer than building the agent itself</li>
+    <li><strong>Enterprise customers need a trust ladder.</strong> Suggest first, assist second, act third. We learned this the hard way when early demos spooked a design partner by auto-triggering their SAP connector</li>
+  </ul>
+</div>
+
+</div>
+</article>
+
+<!-- ARTICLE 2: NUS - ICH RESEARCH AS TPM STORY -->
+<article class="article">
+<div class="article-header">
+  <div class="article-meta">
+    <span class="article-badge badge-company">NUS Singapore</span>
+    <span class="article-badge badge-type">Research Program</span>
+    <span class="article-badge badge-time">4 min read</span>
+  </div>
+  <h2 class="article-title">Coordinating Surgeons and ML Engineers</h2>
+  <p class="article-subtitle">A biomedical AI research collaboration that was, in hindsight, a technical program management exercise</p>
+</div>
+<div class="article-body">
+
+<h3>The Project</h3>
+<p>At the National University of Singapore, I worked on a research project to detect Intracerebral Hemorrhage (brain bleeds) from CT scans using deep learning. The work was published in <em>Medical &amp; Biological Engineering &amp; Computing</em> (Springer).</p>
+<p>My title was Research Collaborator. But the actual job? Sitting between neurosurgeons who needed clinical accuracy and ML engineers who needed clean data and clear labels. That's coordination work. That's TPM work.</p>
+
+<h3>The Stakeholder Map</h3>
+<div class="diagram-container">
+  <div class="diagram-label">Cross-Domain Collaboration</div>
+  <div class="diagram-flow">
+    <div class="diagram-group">
+      <div class="diagram-group-label">Clinical Side</div>
+      <div class="diagram-node">Neurosurgeons<br><small style="color:var(--text3)">define what "hemorrhage" means</small></div>
+      <div class="diagram-node">Anesthesiologists<br><small style="color:var(--text3)">clinical workflow context</small></div>
+      <div class="diagram-node">Radiologists<br><small style="color:var(--text3)">annotate CT scans</small></div>
+    </div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-node highlight" style="min-width:120px">Me<br><small>translation layer</small></div>
+    <div class="diagram-arrow">&rarr;</div>
+    <div class="diagram-group">
+      <div class="diagram-group-label">Engineering Side</div>
+      <div class="diagram-node">Data Pipeline<br><small style="color:var(--text3)">DICOM processing</small></div>
+      <div class="diagram-node">Model Training<br><small style="color:var(--text3)">CNN architectures</small></div>
+      <div class="diagram-node">Validation<br><small style="color:var(--text3)">clinical-grade metrics</small></div>
+    </div>
+  </div>
+</div>
+
+<h3>What Made This Hard</h3>
+<p>The surgeons and the engineers spoke completely different languages. Different success criteria, different timelines, different definitions of "accurate." Every meeting needed a translator.</p>
+
+<div class="phase-timeline">
+  <div class="phase">
+    <span class="phase-label">Gap 1</span>
+    <div class="phase-content"><strong>What counts as "accurate"?</strong> The ML team optimized for AUC-ROC. The surgeons cared about sensitivity (don't miss a bleed) over specificity (false alarms are okay, missed bleeds kill people). I had to translate the clinical priority into a loss function the engineers could implement.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Gap 2</span>
+    <div class="phase-content"><strong>Annotation bottleneck.</strong> Radiologists are expensive and busy. We needed thousands of labeled CT scans, but our radiologist collaborators could annotate maybe 50 per week. I had to negotiate a labeling protocol that was fast enough for the engineers but rigorous enough for the clinicians. We settled on a two-tier system: coarse labels for training, expert-reviewed labels for validation.</div>
+  </div>
+  <div class="phase">
+    <span class="phase-label">Gap 3</span>
+    <div class="phase-content"><strong>Publication vs. product timelines.</strong> The surgeons wanted a published paper with clinical validation. The engineering team wanted to ship a working model. These are different deliverables with different quality bars. I managed both tracks in parallel, with shared milestones where the work overlapped.</div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-title">The TPM Realization</div>
+  <p>I didn't know the term "TPM" during this project. But I was doing the job: aligning stakeholders who don't share a vocabulary, managing dependencies between teams with different incentives, and making sure the final output met everyone's definition of success. The published paper was the deliverable. Getting surgeons and engineers to agree on what goes in it -- that was the actual program.</p>
+</div>
+
+<div class="takeaways">
+  <h3>What I Learned</h3>
+  <ul>
+    <li><strong>Vocabulary kills more cross-domain projects than technology does.</strong> Our model worked within weeks. Getting agreement on what "works" means in clinical terms took months</li>
+    <li><strong>The most valuable person on the team was the one who could translate between domains.</strong> I spent more time in whiteboards with surgeons than in Jupyter notebooks, and that's where the project actually moved forward</li>
+  </ul>
+</div>
+
+</div>
+</article>
 
 </div>
 </div>
@@ -983,337 +1181,6 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </footer>
 
-</div>
-
-<div id="insights-content">
-
-<!-- Insights Hero -->
-<section class="hero insights-hero">
-<div class="container">
-<div class="hero-content">
-  <div class="insights-intro">Thought Pieces</div>
-  <h1>Technical <span class="gradient-text">Insights</span></h1>
-  <p class="hero-sub">Deep dives into complex engineering challenges. How I think about system failures, large-scale migrations, and infrastructure lifecycle management.</p>
-</div>
-</div>
-</section>
-
-<section class="articles-section">
-<div class="container">
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- ARTICLE 1: META - RCA POST-MORTEM              -->
-<!-- ═══════════════════════════════════════════════ -->
-<article class="article">
-<div class="article-header">
-  <div class="article-meta">
-    <span class="article-badge badge-company">Meta</span>
-    <span class="article-badge badge-type">RCA Post-Mortem</span>
-    <span class="article-badge badge-time">8 min read</span>
-  </div>
-  <h2 class="article-title">Diagnosing a Cascading Failure in Instagram Reels Ranking</h2>
-  <p class="article-subtitle">How a routine model update triggered a 4-hour content quality degradation across 340M+ daily active users</p>
-</div>
-
-<div class="article-body">
-
-<h3>Context</h3>
-<p>Instagram Reels serves billions of short-form video recommendations daily through a multi-stage ranking pipeline. The system scores candidate content for relevance, filters it through safety classifiers, and delivers personalized feeds to users across 190+ countries. As <em class="role">Technical Program Manager</em> owning the ranking platform reliability roadmap, this post-mortem documents how a subtle regression cascaded through tightly coupled services and what we built to prevent recurrence.</p>
-
-<h3>Problem Statement</h3>
-<p>On a routine Tuesday deployment, Ranking Model v2.7.1 rolled out to production. The update introduced an improved engagement predictor that had passed all offline evaluation benchmarks. Within two hours of full rollout, user-facing content quality degraded significantly &mdash; users reported repetitive, low-relevance, and stale content. The incident lasted 4 hours, affecting an estimated 340M daily active users before the model was rolled back.</p>
-<p>The failure was not in the model itself. It was in how the model's output distribution interacted with a downstream system that nobody expected to be affected.</p>
-
-<h3>System Architecture & Failure Path</h3>
-<div class="diagram-container">
-  <div class="diagram-label">Reels Ranking Pipeline &mdash; Cascade Path</div>
-  <div class="diagram-flow">
-    <div class="diagram-node">Content Pool<br><small style="color:var(--text3)">~2M candidates</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node">Feature Extraction</div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node danger">Ranking Model v2.7.1<br><small>score distribution shifted</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node danger">Safety Classifiers<br><small>3x volume spike &rarr; timeouts</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node muted">Stale Cache Fallback<br><small>6hr-old rankings served</small></div>
-  </div>
-</div>
-
-<h3>Incident Timeline</h3>
-<div class="incident-timeline">
-  <div class="incident-row"><span class="incident-time">T+0</span><span class="incident-event">Model v2.7.1 begins 5% canary rollout to us-east-1 cluster</span></div>
-  <div class="incident-row"><span class="incident-time">T+15m</span><span class="incident-event">Canary metrics nominal. Per-request latency p50/p99, error rate, and throughput all within bounds. <strong>Rollout approved.</strong></span></div>
-  <div class="incident-row"><span class="incident-time">T+45m</span><span class="incident-event">Full production rollout (100%) across all regions</span></div>
-  <div class="incident-row"><span class="incident-time">T+1h50m</span><span class="incident-event">Content Safety team notices moderation queue depth at 3.2x baseline. Initial assessment: possible spam wave</span></div>
-  <div class="incident-row"><span class="incident-time">T+2h15m</span><span class="incident-event">User experience reports surface in internal dashboards &mdash; "repetitive content," "seeing posts from yesterday." SEV-1 incident declared</span></div>
-  <div class="incident-row"><span class="incident-time">T+2h40m</span><span class="incident-event">Ranking team correlates safety queue spike with model rollout timeline. Investigation shifts from safety to ranking</span></div>
-  <div class="incident-row"><span class="incident-time">T+3h10m</span><span class="incident-event"><strong>Root cause identified:</strong> v2.7.1 feature normalization uses updated population statistics. Score distribution compressed &mdash; 28% more candidates fall into the "borderline" safety band (scores 0.45&ndash;0.65)</span></div>
-  <div class="incident-row"><span class="incident-time">T+3h25m</span><span class="incident-event">Model rolled back to v2.7.0. Safety queue begins draining</span></div>
-  <div class="incident-row"><span class="incident-time">T+4h</span><span class="incident-event">Full recovery confirmed. Stale caches flushed across all edge PoPs</span></div>
-</div>
-
-<h3>Root Cause Analysis: 5 Whys</h3>
-<ol>
-  <li><strong>Why did content quality degrade?</strong> &rarr; Safety classifiers timed out, triggering a fallback to stale cached rankings (some up to 6 hours old)</li>
-  <li><strong>Why did safety classifiers time out?</strong> &rarr; They received 3.2x their normal volume of "borderline" content requiring full classification passes</li>
-  <li><strong>Why did borderline volume spike?</strong> &rarr; The ranking model's output score distribution shifted, compressing more candidates into the 0.45&ndash;0.65 safety threshold band</li>
-  <li><strong>Why did scores shift?</strong> &rarr; Model v2.7.1 used updated feature normalization statistics (retrained population means) without recalibrating the downstream threshold boundaries</li>
-  <li><strong>Why wasn't this caught in testing?</strong> &rarr; Canary evaluation monitored per-request performance (latency, errors) but not <strong>output distribution shape</strong>. The model produced valid scores &mdash; they were just distributed differently</li>
-</ol>
-
-<div class="callout">
-  <div class="callout-title">Core Insight</div>
-  <p>The failure wasn't in any single component. Every service behaved correctly in isolation. The cascade emerged from an <strong>implicit contract</strong> between ranking and safety: the safety system was provisioned for the historical score distribution, not the one v2.7.1 produced. No alert fired because no individual metric crossed its threshold.</p>
-</div>
-
-<h3>Remediation Plan</h3>
-<p>I drove the following action items across Ranking, Safety, and Infrastructure teams with a 30-day completion target:</p>
-<ol>
-  <li><strong>Score Distribution Monitoring</strong> &mdash; Added KL-divergence tracking between canary and baseline score distributions. Canary auto-halts if divergence exceeds 0.15 for 10 consecutive minutes</li>
-  <li><strong>Circuit Breaker</strong> &mdash; Implemented a circuit breaker between ranking and safety services. When safety queue depth exceeds 2x baseline, the system degrades gracefully by tightening the ranking cutoff rather than flooding safety</li>
-  <li><strong>Cache Freshness SLO</strong> &mdash; Established a 30-minute maximum staleness policy for fallback caches. Cache entries older than the SLO are discarded rather than served, triggering a degraded-but-fresh ranking path</li>
-  <li><strong>Cross-Service Contract Testing</strong> &mdash; Introduced integration tests that validate output distribution assumptions between coupled services before any model deployment</li>
-</ol>
-
-<div class="takeaways">
-  <h3>Key Takeaways</h3>
-  <ul>
-    <li><strong>Monitor contracts, not just components.</strong> Per-service health metrics missed a failure that lived in the interaction between services</li>
-    <li><strong>Fallback systems need SLOs too.</strong> A stale cache served "successfully" for hours &mdash; but success without freshness is a silent failure</li>
-    <li><strong>Distribution shifts are invisible to threshold alerts.</strong> Every individual score was valid. The problem was the shape of the aggregate distribution</li>
-  </ul>
-</div>
-
-</div>
-</article>
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- ARTICLE 2: WAYVE - MIGRATION RUNBOOK           -->
-<!-- ═══════════════════════════════════════════════ -->
-<article class="article">
-<div class="article-header">
-  <div class="article-meta">
-    <span class="article-badge badge-company">Wayve</span>
-    <span class="article-badge badge-type">Migration Runbook</span>
-    <span class="article-badge badge-time">9 min read</span>
-  </div>
-  <h2 class="article-title">Zero-Downtime Migration of Safety-Critical Perception Pipelines</h2>
-  <p class="article-subtitle">Moving autonomous driving inference from a monolithic GPU cluster to cloud-native microservices without compromising safety</p>
-</div>
-
-<div class="article-body">
-
-<h3>Context</h3>
-<p>Wayve's perception system is the sensory cortex of its autonomous vehicles: it processes raw camera, LiDAR, and radar inputs into real-time object detections, lane boundaries, and depth maps that feed directly into the motion planning stack. As the fleet scales from 25 to 300+ test vehicles across London and other cities, the current monolithic architecture cannot scale. As <em class="role">Technical Program Manager</em> leading this migration, the challenge is not just technical &mdash; it's coordinating across perception engineering, safety validation, fleet operations, and regulatory compliance to make a zero-downtime transition on a safety-critical system.</p>
-
-<h3>Problem Statement</h3>
-<p>The current perception pipeline runs as a single monolithic process on a custom GPU cluster. Three tightly-coupled inference stages &mdash; object detection (YOLOv8-derived), lane segmentation (custom U-Net), and monocular depth estimation &mdash; share GPU memory and execute sequentially in a single process. This creates three critical scaling bottlenecks:</p>
-<ul>
-  <li><strong>No independent scaling:</strong> A 2x improvement to object detection requires redeploying the entire pipeline, including unchanged models</li>
-  <li><strong>Single point of failure:</strong> A crash in depth estimation kills all three inference stages simultaneously</li>
-  <li><strong>Fleet scaling wall:</strong> The cluster maxes out at ~40 concurrent vehicle streams. Wayve's roadmap requires 300+ by EOY</li>
-</ul>
-<p>The migration must maintain the <strong>hard safety constraint</strong> of &lt;50ms end-to-end inference latency (sensor input to planning output), certified to ASIL-B functional safety standards.</p>
-
-<h3>Architecture: Current vs. Target</h3>
-<div class="diagram-container">
-  <div class="diagram-label">Current &mdash; Monolithic Pipeline</div>
-  <div class="diagram-flow">
-    <div class="diagram-node">Vehicle Sensors<br><small style="color:var(--text3)">Camera + LiDAR + Radar</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node danger" style="min-width:260px">Monolithic GPU Process<br><small>Object Det &bull; Lane Seg &bull; Depth Est</small><br><small style="color:#ef4444">tightly coupled, shared memory</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node">Planning Module</div>
-  </div>
-</div>
-<div class="diagram-container">
-  <div class="diagram-label">Target &mdash; Cloud-Native Microservices</div>
-  <div class="diagram-flow">
-    <div class="diagram-node">Vehicle Sensors</div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-group">
-      <div class="diagram-group-label">Kubernetes GPU Pool</div>
-      <div class="diagram-node success">Object Detection<br><small>independent scaling</small></div>
-      <div class="diagram-node success">Lane Segmentation<br><small>independent scaling</small></div>
-      <div class="diagram-node success">Depth Estimation<br><small>independent scaling</small></div>
-    </div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node highlight">Fusion Service<br><small>aggregates outputs</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node">Planning Module</div>
-  </div>
-</div>
-
-<h3>Migration Phases</h3>
-<div class="phase-timeline">
-  <div class="phase">
-    <span class="phase-label">Phase 1<br>Wk 1&ndash;3</span>
-    <div class="phase-content"><strong>Instrumentation & Baseline.</strong> Instrument the monolithic pipeline with per-stage latency tracing, memory profiling, and output checksums. Establish quantitative baselines: p50/p99 latency per stage, throughput ceiling, and failure modes. These baselines become the acceptance criteria for the new architecture.</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 2<br>Wk 4&ndash;8</span>
-    <div class="phase-content"><strong>Parallel Architecture Build.</strong> Deploy the three inference stages as independent Kubernetes services with gRPC interfaces. Introduce a Fusion Service that aggregates outputs and presents a unified interface to Planning. Critical: implement a <strong>latency budget allocator</strong> that dynamically distributes the 50ms budget across services based on current load.</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 3<br>Wk 9&ndash;14</span>
-    <div class="phase-content"><strong>Shadow Traffic & Safety Validation.</strong> Run both architectures simultaneously. The new pipeline processes real sensor data in shadow mode, with outputs compared bit-for-bit against the monolith. Safety team runs the full ASIL-B validation suite against the new architecture. Acceptance gate: &lt;0.01% output divergence across 10M inference cycles and zero safety-critical mismatches.</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 4<br>Wk 15&ndash;18</span>
-    <div class="phase-content"><strong>Progressive Cutover.</strong> Migrate vehicles in cohorts of 25, starting with the depot test fleet (non-public-road). Each cohort runs on the new pipeline for 72 hours with enhanced monitoring before the next cohort migrates. Rollback is instant: a config flag switches any vehicle back to monolithic processing within one inference cycle.</div>
-  </div>
-</div>
-
-<h3>Risk Register</h3>
-<table class="risk-table">
-  <thead>
-    <tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Network latency between microservices exceeds budget</td>
-      <td><span class="risk-high">High</span></td>
-      <td><span class="risk-med">Medium</span></td>
-      <td>Co-locate services on same GPU node via pod affinity; use shared memory transport (not network) for intra-node communication</td>
-    </tr>
-    <tr>
-      <td>Safety certification delayed by regulatory review</td>
-      <td><span class="risk-high">High</span></td>
-      <td><span class="risk-med">Medium</span></td>
-      <td>Engage safety team in Phase 1 to co-define acceptance criteria; pre-submit documentation in Phase 2</td>
-    </tr>
-    <tr>
-      <td>Output divergence between monolith and microservices</td>
-      <td><span class="risk-med">Medium</span></td>
-      <td><span class="risk-low">Low</span></td>
-      <td>Bit-level comparison in shadow mode; root-cause any divergence before proceeding to Phase 4</td>
-    </tr>
-    <tr>
-      <td>GPU resource contention under peak fleet load</td>
-      <td><span class="risk-med">Medium</span></td>
-      <td><span class="risk-med">Medium</span></td>
-      <td>Load test at 2x projected peak (600 streams) during Phase 3; implement priority-based GPU scheduling</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="callout">
-  <div class="callout-title">Stakeholder Coordination</div>
-  <p>The hardest part of this migration isn't the Kubernetes manifest. It's that the Perception team, Safety team, Fleet Ops, and Regulatory each have veto power, different risk tolerances, and competing timelines. The TPM's job is to create a shared definition of "safe enough to proceed" <em>before</em> Phase 3 begins, not during it.</p>
-</div>
-
-<div class="takeaways">
-  <h3>Key Takeaways</h3>
-  <ul>
-    <li><strong>Safety-critical migrations require parallel validation, not sequential.</strong> You cannot test-then-cutover; you must run both systems simultaneously long enough to build statistical confidence</li>
-    <li><strong>The rollback plan IS the migration plan.</strong> Every phase must be instantly reversible. If rollback is hard, the migration architecture is wrong</li>
-    <li><strong>Define acceptance criteria before building.</strong> Phase 1's instrumentation work prevents Phase 3 from becoming an open-ended debate about what "good enough" means</li>
-  </ul>
-</div>
-
-</div>
-</article>
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- ARTICLE 3: STRIPE - LIFECYCLE DEPRECATION PLAN -->
-<!-- ═══════════════════════════════════════════════ -->
-<article class="article">
-<div class="article-header">
-  <div class="article-meta">
-    <span class="article-badge badge-company">Stripe</span>
-    <span class="article-badge badge-type">Lifecycle Plan</span>
-    <span class="article-badge badge-time">7 min read</span>
-  </div>
-  <h2 class="article-title">Deprecating Legacy Infrastructure Without Breaking the Internet</h2>
-  <p class="article-subtitle">An 18-month lifecycle plan for sunsetting Stripe's original payment gateway while protecting 12,000 merchant integrations</p>
-</div>
-
-<div class="article-body">
-
-<h3>Context</h3>
-<p>Stripe's original payment processing gateway &mdash; internally called "Gateway Classic" &mdash; was built during the company's first year. A decade later, it still processes 8% of total transaction volume from approximately 12,000 long-tail merchants. As <em class="role">Technical Program Manager</em> leading the deprecation initiative, the challenge is that these merchants depend on undocumented API behaviors, legacy webhook formats, and error codes that don't exist in the modern gateway. A forced cutover would break payment processing for small businesses that depend on Stripe as their sole payment provider.</p>
-
-<h3>Problem Statement</h3>
-<p>Gateway Classic presents three escalating risks:</p>
-<ul>
-  <li><strong>Security:</strong> Uses TLS 1.1, approaching end-of-support. PCI DSS 4.0 requires TLS 1.2+ by March next year. Non-compliance exposes Stripe to audit findings and merchant liability</li>
-  <li><strong>Operational cost:</strong> Requires 3.2x the engineering maintenance hours per transaction vs. the modern gateway. Two dedicated engineers spend ~60% of their time on Classic-specific incident response</li>
-  <li><strong>Scaling ceiling:</strong> No horizontal scaling capability. During Black Friday, Classic hits its throughput limit and begins dropping transactions for its merchants</li>
-</ul>
-<p>The constraint: zero payment processing interruptions. Even one dropped transaction during migration means lost revenue for a small business owner. And unlike a B2B SaaS migration, we cannot schedule "maintenance windows" &mdash; payments happen 24/7.</p>
-
-<h3>Migration Architecture</h3>
-<div class="diagram-container">
-  <div class="diagram-label">Compatibility Shim Architecture</div>
-  <div class="diagram-flow">
-    <div class="diagram-group">
-      <div class="diagram-group-label">Legacy Merchants (12K)</div>
-      <div class="diagram-node muted">Classic API Calls<br><small>TLS 1.1, legacy error codes</small></div>
-    </div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node highlight" style="min-width:160px">Compatibility Shim<br><small>translates requests/responses<br>maps error codes<br>converts webhook formats</small></div>
-    <div class="diagram-arrow">&rarr;</div>
-    <div class="diagram-node success">Modern Gateway<br><small>TLS 1.3, scalable,<br>PCI DSS 4.0 compliant</small></div>
-  </div>
-</div>
-<p>The Compatibility Shim is the key architectural decision. Rather than forcing merchants to rewrite their integrations, we build a translation layer that accepts Classic API calls and converts them to modern gateway requests. This lets us decommission Classic's infrastructure without requiring any merchant code changes for the initial cutover.</p>
-
-<h3>Phased Deprecation Plan</h3>
-<div class="phase-timeline">
-  <div class="phase">
-    <span class="phase-label">Phase 1<br>Month 1&ndash;3</span>
-    <div class="phase-content"><strong>Audit & Shim Development.</strong> Catalog every undocumented API behavior, legacy error code, and custom webhook format used by Classic merchants. Build the Compatibility Shim with 100% behavioral parity. Instrument Classic to capture full request/response pairs for replay testing.</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 2<br>Month 4&ndash;6</span>
-    <div class="phase-content"><strong>Shadow Traffic Validation.</strong> Mirror 100% of Classic traffic through the Shim &rarr; Modern Gateway path. Compare responses. Acceptance gate: &lt;0.001% response divergence across 30 days (excluding expected timing differences). Fix every divergence &mdash; no exceptions.</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 3<br>Month 7&ndash;12</span>
-    <div class="phase-content"><strong>Tiered Migration.</strong> Three merchant tiers based on integration complexity:
-      <br>&bull; <strong>Self-serve</strong> (8,200 merchants): Simple integrations. Auto-migrate through Shim with email notification. Provide one-click rollback button in dashboard
-      <br>&bull; <strong>Assisted</strong> (3,400 merchants): Medium complexity. Dedicated migration guide, sandbox environment, and support ticket priority queue
-      <br>&bull; <strong>White-glove</strong> (400 merchants): High complexity or high revenue. Assigned migration engineer, custom testing, direct Slack channel for live support</div>
-  </div>
-  <div class="phase">
-    <span class="phase-label">Phase 4<br>Month 13&ndash;18</span>
-    <div class="phase-content"><strong>Shim Sunset & Direct Migration.</strong> Incentivize merchants to adopt the modern API directly (shim adds ~8ms latency). Provide automated code migration tools, updated SDKs, and migration credits. Target: 80%+ merchants migrated off shim to direct modern API. Decommission Classic infrastructure. Shim remains for long-tail.</div>
-  </div>
-</div>
-
-<h3>Communication Strategy</h3>
-<p>Deprecation is as much a communication challenge as a technical one. The plan follows a structured cadence:</p>
-<ul>
-  <li><strong>T-12 months:</strong> Public blog post announcing deprecation timeline. No merchant action required yet</li>
-  <li><strong>T-9 months:</strong> Personalized email to each merchant with their specific migration tier and timeline. Link to migration guide</li>
-  <li><strong>T-6 months:</strong> Dashboard banner in Stripe console. Sandbox environment available for testing</li>
-  <li><strong>T-3 months:</strong> Direct outreach to merchants who haven't begun migration. Offer migration support calls</li>
-  <li><strong>T-1 month:</strong> Final notice with specific cutover date. Escalation path for merchants needing extensions</li>
-</ul>
-
-<div class="callout">
-  <div class="callout-title">The Long Tail Problem</div>
-  <p>The last 2% of merchants will take 50% of the effort. These are merchants with custom integrations built by contractors who are no longer available, merchants in industries with regulatory constraints on software changes, or merchants who simply don't read emails. The white-glove tier exists specifically for this long tail. Budget for it from day one.</p>
-</div>
-
-<div class="takeaways">
-  <h3>Key Takeaways</h3>
-  <ul>
-    <li><strong>Build the bridge before closing the road.</strong> The Compatibility Shim lets us decommission legacy infrastructure without requiring merchant action. Migration becomes optional (but incentivized), not forced</li>
-    <li><strong>Segment merchants by integration complexity, not revenue.</strong> A $500/month merchant with a deeply custom integration needs more support than a $50,000/month merchant using the standard SDK</li>
-    <li><strong>Deprecation timelines are communication artifacts, not engineering artifacts.</strong> The technical migration can happen in 6 months. The 18-month timeline exists to give merchants time to plan, budget, and execute their side of the change</li>
-  </ul>
-</div>
-
-</div>
-</article>
-
-</div>
-</section>
-
-</div>
-
 <script>
 // ── Theme Toggle ──
 const html = document.documentElement;
@@ -1446,7 +1313,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.timeline-item, .edu-card, .project-card, .skill-group, .stat').forEach(el => {
+document.querySelectorAll('.timeline-item, .edu-card, .project-card, .skill-group, .stat, .article, .diagram-container').forEach(el => {
   observer.observe(el);
 });
 
@@ -1496,6 +1363,12 @@ document.querySelectorAll('.edu-card').forEach((el, i) => { el.style.transitionD
 document.querySelectorAll('.skill-group').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
 document.querySelectorAll('.stat').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
 
+// ── Diagram stagger (left-to-right cascade) ──
+document.querySelectorAll('.diagram-container').forEach(container => {
+  const children = container.querySelectorAll('.diagram-node, .diagram-arrow, .diagram-group');
+  children.forEach((el, i) => { el.style.transitionDelay = (i * 0.12 + 0.15) + 's'; });
+});
+
 // ── Mobile menu ──
 const mobileBtn = document.getElementById('mobileMenuBtn');
 mobileBtn.addEventListener('click', () => {
@@ -1509,32 +1382,7 @@ mobileBtn.addEventListener('click', () => {
 });
 
 
-// ── Tab Switching ──
-function switchTab(tab) {
-  const portfolioContent = document.getElementById('portfolio-content');
-  const insightsContent = document.getElementById('insights-content');
-  const portfolioNav = document.getElementById('portfolioNav');
-
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.nav-tab[data-tab="${tab}"]`).classList.add('active');
-
-  if (tab === 'portfolio') {
-    portfolioContent.style.display = 'block';
-    insightsContent.style.display = 'none';
-    if (portfolioNav) portfolioNav.style.display = 'flex';
-  } else {
-    portfolioContent.style.display = 'none';
-    insightsContent.style.display = 'block';
-    if (portfolioNav) portfolioNav.style.display = 'none';
-  }
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Handle direct URL with hash
-if (window.location.hash === '#insights') {
-  switchTab('insights');
-}
+// (Tab switching removed -- case studies now inline)
 
 </script>
 </body>
