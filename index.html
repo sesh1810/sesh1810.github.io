@@ -358,7 +358,7 @@ section{padding:5.5rem 0}
 }
 
 /* ── PROJECTS ── */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.5rem}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
 .project-card{
   background:var(--card);border:1px solid var(--border);border-radius:14px;
   padding:1.75rem;position:relative;overflow:hidden;
@@ -385,6 +385,37 @@ section{padding:5.5rem 0}
 }
 .project-link:hover{gap:.5rem}
 .project-link svg{width:14px;height:14px}
+
+/* Featured project cards */
+.project-card.featured{padding:0;overflow:hidden}
+.project-card.featured>*:not(.project-preview){padding:0 1.75rem}
+.project-card.featured>.project-tag{padding:.2rem .55rem;margin:1.25rem 1.75rem .75rem}
+.project-card.featured>h3{margin-bottom:.5rem}
+.project-card.featured>p{padding-bottom:0}
+.project-card.featured>.project-link{padding:0 1.75rem;padding-bottom:1.75rem}
+.project-preview{
+  height:120px;display:flex;align-items:center;justify-content:center;
+  gap:.75rem;position:relative;overflow:hidden;
+}
+.project-preview::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(0,0,0,.15));
+}
+.preview-icon{
+  position:relative;z-index:1;
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.18);
+}
+.preview-label{
+  position:absolute;top:.75rem;right:.75rem;z-index:1;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  text-transform:uppercase;letter-spacing:1.5px;
+  color:rgba(255,255,255,.8);background:rgba(0,0,0,.25);
+  padding:.2rem .55rem;border-radius:4px;
+  backdrop-filter:blur(4px);
+}
 
 /* ── SKILLS ── */
 .skills-section{
@@ -469,6 +500,8 @@ footer .footer-links svg{width:15px;height:15px}
 @media(max-width:480px){
   .container{padding:0 1.25rem}
   .hero h1{letter-spacing:-1.5px}
+}
+@media(max-width:680px){
   .projects-grid{grid-template-columns:1fr}
 }
 
@@ -1039,17 +1072,39 @@ footer .footer-links svg{width:15px;height:15px}
 <section id="projects">
 <div class="container">
 <div class="section-header">
-  <div class="section-label">Research &amp; Projects</div>
-  <h2 class="section-title">Academic Work</h2>
+  <div class="section-label">Prototypes &amp; Research</div>
+  <h2 class="section-title">Featured Work</h2>
 </div>
 <div class="projects-grid">
 
-  <div class="project-card">
-    <span class="project-tag">AI / Cloud</span>
-    <h3>AI-Driven Datacenter Resource Orchestrator</h3>
-    <p>Designed an AI-driven datacenter orchestration platform that optimizes global workload placement for cost, latency, and carbon efficiency.</p>
-    <a href="https://cloud-ops-view.lovable.app/" target="_blank" class="project-link">
-      View Demo
+  <div class="project-card featured">
+    <div class="project-preview" style="background:linear-gradient(135deg,#1a3a2a,#2d6a4f,#40916c)">
+      <div class="preview-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;color:#fff"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <span class="preview-label">Interactive Prototype</span>
+    </div>
+    <span class="project-tag" style="background:rgba(45,106,79,.12);color:#2d6a4f">Sustainability / Product</span>
+    <h3>Patagonia Product Passport</h3>
+    <p>End-to-end sustainability tracker that maps a garment's environmental footprint across five lifecycle stages: sourcing, manufacturing, transit, usage, and end-of-life. Features Worn Wear integration, repair pathways, and recycling options.</p>
+    <a href="https://patagonia-product-passport.lovable.app/" target="_blank" class="project-link">
+      Live Demo
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+    </a>
+  </div>
+
+  <div class="project-card featured">
+    <div class="project-preview" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)">
+      <div class="preview-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;color:#fff"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polyline points="6 8 10 12 14 8 18 12"/></svg>
+      </div>
+      <span class="preview-label">Interactive Prototype</span>
+    </div>
+    <span class="project-tag">Firmware / TPM</span>
+    <h3>Tesla Firmware Lifecycle Console</h3>
+    <p>Management dashboard for Megapack firmware operations. Tracks the full development cycle from build through validation, pilot rollout, and fleet-wide deployment with real-time stability metrics and regional heatmaps.</p>
+    <a href="https://tesla-firmware-flow.lovable.app/" target="_blank" class="project-link">
+      Live Demo
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
     </a>
   </div>
@@ -1063,7 +1118,7 @@ footer .footer-links svg{width:15px;height:15px}
   <div class="project-card">
     <span class="project-tag">Biomedical AI</span>
     <h3>ICH Detection Research &mdash; NUS Singapore</h3>
-    <p>Collaborated with world-renowned neurosurgeons, anesthesiologists, and medical imaging specialists to drive a high-impact biomed-AI project on Intracerebral Hemorrhage detection. Published in Medical &amp; Biological Engineering &amp; Computing.</p>
+    <p>Collaborated with neurosurgeons, anesthesiologists, and medical imaging specialists on a high-impact biomed-AI project for Intracerebral Hemorrhage detection. Published in Medical &amp; Biological Engineering &amp; Computing (Springer).</p>
     <a href="https://link.springer.com/article/10.1007/s11517-021-02459-y" target="_blank" class="project-link">
       Read Paper
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -1151,6 +1206,7 @@ footer .footer-links svg{width:15px;height:15px}
       <span class="skill-tag">Lucidchart</span>
       <span class="skill-tag">Smartsheet</span>
       <span class="skill-tag">MS Project</span>
+      <span class="skill-tag">Jupyter</span>
     </div>
   </div>
 
@@ -1329,44 +1385,7 @@ document.querySelectorAll('.timeline-item, .edu-card, .project-card, .skill-grou
   observer.observe(el);
 });
 
-// ── Counter Animation ──
-let statsCounted = false;
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !statsCounted) {
-      statsCounted = true;
-      animateCounters();
-    }
-  });
-}, { threshold: 0.5 });
-statsObserver.observe(document.getElementById('stats'));
-
-function animateCounters() {
-  document.querySelectorAll('.stat-number').forEach(el => {
-    const target = parseFloat(el.dataset.target);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const isDecimal = target % 1 !== 0;
-    const duration = 2000;
-    const start = performance.now();
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = eased * target;
-      if (target >= 1000) {
-        el.textContent = prefix + Math.floor(current).toLocaleString() + suffix;
-      } else if (isDecimal) {
-        el.textContent = prefix + current.toFixed(1) + suffix;
-      } else {
-        el.textContent = prefix + Math.floor(current) + suffix;
-      }
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  });
-}
+// ── Counter Animation (stats bar removed) ──
 
 // ── Stagger delays ──
 document.querySelectorAll('.timeline-item').forEach((el, i) => { el.style.transitionDelay = i * 0.12 + 's'; });
