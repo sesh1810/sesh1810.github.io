@@ -112,7 +112,7 @@ nav{
   transition:box-shadow .3s ease, background .3s ease;
 }
 nav.scrolled{box-shadow:var(--shadow-md)}
-nav .container{display:flex;align-items:center;justify-content:space-between;height:60px}
+nav .container{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
 .nav-right{display:flex;align-items:center;gap:2rem}
 .nav-links{display:flex;gap:1.8rem;list-style:none}
 .nav-links a{
@@ -141,6 +141,17 @@ nav .container{display:flex;align-items:center;justify-content:space-between;hei
 [data-theme="dark"] .theme-toggle .icon-sun{opacity:0;transform:rotate(-90deg) scale(0)}
 [data-theme="dark"] .theme-toggle .icon-moon{opacity:1;transform:rotate(0) scale(1)}
 
+/* Nav brand (visible on mobile) */
+.nav-brand{
+  display:none;font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;font-weight:600;letter-spacing:-.5px;
+  color:var(--text);cursor:pointer;
+}
+.nav-brand span{
+  background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
 /* Mobile menu toggle */
 .mobile-menu-btn{
   display:none;background:none;border:none;cursor:pointer;
@@ -156,8 +167,8 @@ nav .container{display:flex;align-items:center;justify-content:space-between;hei
 
 /* ── HERO ── */
 .hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding-top:60px;position:relative;
+  min-height:calc(100vh - 63px);display:flex;align-items:center;
+  position:relative;
 }
 .hero-content{width:100%;display:flex;align-items:center;gap:3rem}
 .hero-text{flex:1}
@@ -235,6 +246,17 @@ nav .container{display:flex;align-items:center;justify-content:space-between;hei
   transform:translateY(-2px);box-shadow:var(--shadow-md);
 }
 .social-btn svg{width:18px;height:18px}
+
+.resume-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.55rem 1.2rem;border-radius:10px;
+  background:var(--gradient);color:#fff;
+  text-decoration:none;font-size:.82rem;font-weight:600;
+  letter-spacing:.3px;
+  transition:all .3s ease;box-shadow:var(--shadow-sm);
+}
+.resume-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.resume-btn svg{width:16px;height:16px}
 
 .scroll-indicator{
   position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
@@ -485,8 +507,8 @@ footer .footer-links svg{width:15px;height:15px}
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .nav-links{display:none}
+  .nav-brand{display:block}
   .mobile-menu-btn{display:block}
-  .stats-bar{grid-template-columns:repeat(2,1fr);gap:1.5rem}
   .edu-grid{grid-template-columns:1fr}
   .hero-contact{flex-direction:column;gap:.6rem}
   section{padding:3.5rem 0}
@@ -495,6 +517,11 @@ footer .footer-links svg{width:15px;height:15px}
   .timeline-header{gap:.5rem}
   .company-badge{width:30px;height:30px;border-radius:8px}
   .company-badge svg{width:18px;height:18px}
+  .hero{min-height:auto;padding:2rem 0}
+  .hero-photo{width:160px;height:160px}
+  .page{padding-top:60px;min-height:auto}
+  .nav-links a{font-size:.9rem;padding:.4rem 0}
+  .nav-right{gap:1rem}
 }
 
 @media(max-width:480px){
@@ -707,23 +734,41 @@ footer .footer-links svg{width:15px;height:15px}
   .risk-table{font-size:.75rem}
 }
 
+/* ── SPA Page System ── */
+.page{display:none;min-height:calc(100vh - 63px);padding-top:63px}
+.page.active{display:block;animation:pageIn .35s ease}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Make all animated children visible immediately inside active pages */
+.page.active .timeline-item,
+.page.active .edu-card,
+.page.active .project-card,
+.page.active .skill-group,
+.page.active .article,
+.page.active .diagram-container,
+.page.active .diagram-node,
+.page.active .diagram-arrow,
+.page.active .diagram-group{
+  opacity:1!important;transform:none!important;transition-delay:0s!important;
+}
+
 </style>
 </head>
 <body>
 
-<div class="scroll-progress" id="scrollProgress"></div>
 <canvas id="network-canvas"></canvas>
 
 <!-- NAV -->
 <nav id="mainNav">
 <div class="container">
+  <div class="nav-brand" onclick="navigateTo('home')">S<span>R</span></div>
   <div class="nav-right" style="width:100%;justify-content:space-between">
     <ul class="nav-links">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#case-studies">Case Studies</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#skills">Skills</a></li>
+      <li><a href="#" data-page="home" class="active">Home</a></li>
+      <li><a href="#" data-page="experience">Experience</a></li>
+      <li><a href="#" data-page="case-studies">Case Studies</a></li>
+      <li><a href="#" data-page="projects">Projects</a></li>
+      <li><a href="#" data-page="education">Education</a></li>
+      <li><a href="#" data-page="skills">Skills</a></li>
     </ul>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
       <!-- Sun icon -->
@@ -742,7 +787,8 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </nav>
 
-<!-- HERO -->
+<!-- HOME PAGE -->
+<div class="page active" data-page="home">
 <section class="hero">
 <div class="container">
 <div class="hero-content">
@@ -771,6 +817,10 @@ footer .footer-links svg{width:15px;height:15px}
       <a href="https://github.com/sesh1810" target="_blank" class="social-btn" title="GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
       </a>
+      <a href="resume/Seshasayi_Rangaraj_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </a>
     </div>
   </div>
   <div class="hero-photo">
@@ -778,13 +828,11 @@ footer .footer-links svg{width:15px;height:15px}
   </div>
 </div>
 </div>
-<div class="scroll-indicator">
-  <span>Scroll</span>
-  <div class="scroll-line"></div>
-</div>
 </section>
+</div>
 
-
+<!-- EXPERIENCE PAGE -->
+<div class="page" data-page="experience">
 <!-- EXPERIENCE -->
 <section id="experience">
 <div class="container">
@@ -878,8 +926,11 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </div>
 </section>
+</div>
 
-<!-- CASE STUDIES (inline) -->
+<!-- CASE STUDIES PAGE -->
+<div class="page" data-page="case-studies">
+<!-- CASE STUDIES -->
 <section id="case-studies">
 <div class="container">
 <div class="section-header">
@@ -1067,7 +1118,10 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </div>
 </section>
+</div>
 
+<!-- PROJECTS PAGE -->
+<div class="page" data-page="projects">
 <!-- PROJECTS -->
 <section id="projects">
 <div class="container">
@@ -1128,7 +1182,10 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </div>
 </section>
+</div>
 
+<!-- EDUCATION PAGE -->
+<div class="page" data-page="education">
 <!-- EDUCATION -->
 <section id="education">
 <div class="container">
@@ -1161,7 +1218,10 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </div>
 </section>
+</div>
 
+<!-- SKILLS PAGE -->
+<div class="page" data-page="skills">
 <!-- SKILLS -->
 <section id="skills" class="skills-section">
 <div class="container">
@@ -1206,7 +1266,6 @@ footer .footer-links svg{width:15px;height:15px}
       <span class="skill-tag">Lucidchart</span>
       <span class="skill-tag">Smartsheet</span>
       <span class="skill-tag">MS Project</span>
-      <span class="skill-tag">Jupyter</span>
     </div>
   </div>
 
@@ -1226,6 +1285,7 @@ footer .footer-links svg{width:15px;height:15px}
 </div>
 </div>
 </section>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1305,8 +1365,6 @@ function initParticles() {
 function drawNetwork() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const maxDist = 150;
-
-  // Draw lines
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
       const dx = particles[i].x - particles[j].x;
@@ -1323,21 +1381,16 @@ function drawNetwork() {
       }
     }
   }
-
-  // Draw dots
   particles.forEach(p => {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fillStyle = canvasColors.dot;
     ctx.fill();
-
-    // Move
     p.x += p.vx;
     p.y += p.vy;
     if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
   });
-
   animId = requestAnimationFrame(drawNetwork);
 }
 
@@ -1345,75 +1398,45 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 drawNetwork();
 
-// ── Scroll Progress ──
-const scrollProgress = document.getElementById('scrollProgress');
-window.addEventListener('scroll', () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  scrollProgress.style.width = pct + '%';
-});
-
-// ── Nav scroll shadow ──
-const mainNav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  mainNav.classList.toggle('scrolled', window.scrollY > 30);
-});
-
-// ── Active nav link ──
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => {
-    const top = s.offsetTop - 120;
-    if (window.scrollY >= top) current = s.getAttribute('id');
+// ── SPA Page Navigation ──
+let menuOpen = false;
+function navigateTo(pageName) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target page
+  const target = document.querySelector(`.page[data-page="${pageName}"]`);
+  if (target) target.classList.add('active');
+  // Update nav active state
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === pageName);
   });
-  navLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  // Scroll to top
+  window.scrollTo(0, 0);
+  // Close mobile menu if open
+  menuOpen = false;
+  const navLinksEl = document.querySelector('.nav-links');
+  if (window.innerWidth <= 768) navLinksEl.style.display = 'none';
+}
+
+// Nav click handlers
+document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigateTo(link.dataset.page);
   });
-});
-
-// ── Intersection Observer for animations ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.timeline-item, .edu-card, .project-card, .skill-group, .stat, .article, .diagram-container').forEach(el => {
-  observer.observe(el);
-});
-
-// ── Counter Animation (stats bar removed) ──
-
-// ── Stagger delays ──
-document.querySelectorAll('.timeline-item').forEach((el, i) => { el.style.transitionDelay = i * 0.12 + 's'; });
-document.querySelectorAll('.project-card').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
-document.querySelectorAll('.edu-card').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
-document.querySelectorAll('.skill-group').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
-document.querySelectorAll('.stat').forEach((el, i) => { el.style.transitionDelay = i * 0.08 + 's'; });
-
-// ── Diagram stagger (left-to-right cascade) ──
-document.querySelectorAll('.diagram-container').forEach(container => {
-  const children = container.querySelectorAll('.diagram-node, .diagram-arrow, .diagram-group');
-  children.forEach((el, i) => { el.style.transitionDelay = (i * 0.12 + 0.15) + 's'; });
 });
 
 // ── Mobile menu ──
 const mobileBtn = document.getElementById('mobileMenuBtn');
 mobileBtn.addEventListener('click', () => {
   const navLinksEl = document.querySelector('.nav-links');
-  const isOpen = navLinksEl.style.display === 'flex';
-  if (isOpen) {
-    navLinksEl.style.display = 'none';
+  menuOpen = !menuOpen;
+  if (menuOpen) {
+    navLinksEl.style.cssText = 'display:flex;position:fixed;top:63px;left:0;right:0;flex-direction:column;background:var(--nav-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:1.5rem 2rem;gap:1.2rem;border-bottom:1px solid var(--border);z-index:99;box-shadow:var(--shadow-lg);';
   } else {
-    navLinksEl.style.cssText = 'display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--nav-bg);backdrop-filter:blur(24px);padding:1rem 2rem;gap:.8rem;border-bottom:1px solid var(--border);z-index:99;';
+    navLinksEl.style.display = 'none';
   }
 });
-
-
-// (Tab switching removed -- case studies now inline)
 
 </script>
 </body>
