@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Tennis Point Simulator — Sesh Rangaraj</title>
-<meta name="description" content="A voice-controlled 3D tennis point simulator. Chess puzzles, but for tennis.">
+<meta name="description" content="A type-to-play 3D tennis point simulator. Chess puzzles, but for tennis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -116,18 +116,9 @@ a{color:inherit;text-decoration:none}
 #inputPanel{position:absolute;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);width:min(680px,calc(100% - 28px));padding:16px 18px;z-index:25;transition:transform .55s cubic-bezier(.25,.9,.3,1.05)}
 #inputPanel.up{transform:translateX(-50%) translateY(0)}
 .ip-row{display:flex;align-items:center;gap:16px}
-#micBtn{position:relative;width:64px;height:64px;border-radius:50%;flex-shrink:0;background:radial-gradient(circle at 35% 30%,rgba(94,176,255,.35),rgba(94,176,255,.12));border:1px solid rgba(94,176,255,.5);display:grid;place-items:center;font-size:24px;transition:all .3s}
-#micBtn:hover{transform:scale(1.05)}
-#micBtn.listening{background:radial-gradient(circle at 35% 30%,rgba(255,93,108,.4),rgba(255,93,108,.15));border-color:rgba(255,93,108,.7);animation:micPulse 1.4s ease-in-out infinite}
-@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,93,108,.4)}50%{box-shadow:0 0 0 14px rgba(255,93,108,0)}}
-#micBtn:disabled{opacity:.4;cursor:default;transform:none}
 .ip-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
 #transcript{min-height:22px;font-size:15px;color:var(--text);font-style:italic}
 #transcript .hint{color:var(--text-faint);font-style:normal;font-size:13.5px}
-.wave{display:none;align-items:flex-end;gap:3px;height:16px}
-.wave.on{display:flex}
-.wave i{width:3px;border-radius:2px;background:var(--danger);animation:wv .8s ease-in-out infinite}
-.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}.wave i:nth-child(5){animation-delay:.15s}.wave i:nth-child(6){animation-delay:.05s}
 @keyframes wv{0%,100%{height:4px}50%{height:16px}}
 #pills{display:flex;gap:7px;flex-wrap:wrap;min-height:26px}
 .pill{font-family:var(--font-mono);font-size:11.5px;font-weight:600;letter-spacing:.05em;padding:4px 11px;border-radius:999px;border:1px solid var(--glass-border);background:rgba(255,255,255,.05);animation:pillIn .3s cubic-bezier(.2,.9,.3,1.3)}
@@ -152,7 +143,7 @@ a{color:inherit;text-decoration:none}
 .btn-ghost{border:1px solid var(--glass-border);color:var(--text-dim)}
 .btn-ghost:hover{color:var(--text);background:rgba(255,255,255,.05)}
 #textFallback{display:flex;gap:8px;margin-top:11px}
-#textFallback input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none}
+#textFallback input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(94,176,255,.35);border-radius:var(--radius-sm);padding:13px 16px;color:var(--text);font-family:var(--font-body);font-size:15px;outline:none}
 #textFallback input:focus{border-color:rgba(94,176,255,.5)}
 #textFallback input::placeholder{color:var(--text-faint)}
 
@@ -286,7 +277,6 @@ td.prob{font-family:var(--font-mono);font-weight:600}
   #momentum{left:10px;width:8px;height:32vh}
   .mom-tag{display:none}
   #inputPanel{bottom:10px;padding:13px 14px}
-  #micBtn{width:56px;height:56px;font-size:21px}
   .prob-wrap{width:66px;height:66px}
   #probNum{font-size:16px}
   .topbar{top:8px;left:8px;right:8px;padding:8px 10px}
@@ -317,10 +307,10 @@ td.prob{font-family:var(--font-mono);font-weight:600}
       <button class="sound-toggle" id="soundToggleSel">🔊 Sound</button>
     </div>
     <div class="sel-hero">
-      <div class="kicker">🎾 Voice-controlled · 3D · Probability engine</div>
+      <div class="kicker">🎾 Type-to-play · 3D · Probability engine</div>
       <h1>Tennis Point Simulator</h1>
       <div class="tag">"Can you construct the perfect point?"</div>
-      <p class="intro">Chess puzzles, but for tennis. An opponent hits a shot — you <b>speak</b> your reply ("crosscourt deep", "slice down the line", "drop shot"). A probability engine resolves every exchange. Play percentage tennis, or gamble on heroics.</p>
+      <p class="intro">Chess puzzles, but for tennis. An opponent hits a shot — you <b>type</b> your reply ("crosscourt deep", "slice down the line", "drop shot"). A probability engine resolves every exchange. Play percentage tennis, or gamble on heroics.</p>
     </div>
     <div class="court-cards">
       <button class="court-card" data-surface="clay" style="--dot:#e0754a;--cta:linear-gradient(135deg,#b3502e,#d97544)">
@@ -401,10 +391,8 @@ td.prob{font-family:var(--font-mono);font-weight:600}
 
   <div id="inputPanel" class="glass">
     <div class="ip-row">
-      <button id="micBtn" title="Hold to speak (or press Space)">🎤</button>
       <div class="ip-mid">
-        <div id="transcript"><span class="hint">Tap the mic and call your shot — e.g. "crosscourt deep" or "slice down the line"</span></div>
-        <div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div id="transcript"><span class="hint">Type your shot below — e.g. "crosscourt deep" or "slice down the line"</span></div>
         <div id="pills"></div>
       </div>
       <div class="prob-wrap">
@@ -417,8 +405,8 @@ td.prob{font-family:var(--font-mono);font-weight:600}
       <button class="btn btn-ghost" id="changeBtn">✕ Change My Mind</button>
     </div>
     <div id="textFallback">
-      <input id="textInput" type="text" placeholder='Or type it: "inside-out forehand, go for it"' autocomplete="off">
-      <button class="btn btn-ghost" id="textGo" style="flex:0 0 auto;padding:10px 18px">Set</button>
+      <input id="textInput" type="text" placeholder='Your shot: "crosscourt deep" · "slice down the line" · "drop shot — go for it"' autocomplete="off">
+      <button class="btn btn-ghost" id="textGo" style="flex:0 0 auto;padding:10px 22px">Set Shot</button>
     </div>
   </div>
 
@@ -519,7 +507,7 @@ td.prob{font-family:var(--font-mono);font-weight:600}
 <!-- TUTORIAL -->
 <div id="tutorial"><div class="tut-card glass">
   <div class="tut-step-num" id="tutNum">Step 1 of 3</div>
-  <div class="emoji" id="tutEmoji">🎤</div>
+  <div class="emoji" id="tutEmoji">⌨️</div>
   <h3 id="tutTitle"></h3>
   <p id="tutText"></p>
   <div class="tut-actions">
@@ -529,6 +517,6 @@ td.prob{font-family:var(--font-mono);font-weight:600}
 </div></div>
 
 <script>window.__inline_ok=1;</script>
-<script src="app.v1.js"></script>
+<script src="app.v2.js"></script>
 </body>
 </html>
