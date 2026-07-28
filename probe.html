@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Script Probe</title>
+<style>body{font:16px/1.7 ui-monospace,monospace;background:#111;color:#e8e8e8;padding:28px;max-width:640px}
+li{margin:4px 0;color:#7fe8b2} .note{color:#999;margin-top:18px;font-size:14px}</style></head>
+<body>
+<h3>Script execution probe</h3>
+<p class="note">Each line below appears only if that script slot actually executed:</p>
+<ul id="out"></ul>
+<p class="note">Screenshot this whole page after ~3 seconds. If the list is empty, zero script tags ran.</p>
+<script>document.getElementById('out').insertAdjacentHTML('beforeend','<li>SLOT 1 — inline script: RAN</li>');</script>
+<script src="p2.js"></script>
+<script>document.getElementById('out').insertAdjacentHTML('beforeend','<li>SLOT 3 — inline script: RAN</li>');</script>
+<script src="p4big.js"></script>
+<script src="p5.js"></script>
+</body></html>
