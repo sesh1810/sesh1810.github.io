@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sing → Violin — Seshasayi Rangaraj</title>
+<meta name="description" content="Sing up to four notes. A 3D violin finds your pitches and shows you exactly how to play them.">
+<style>
+  html,body{height:100%;margin:0;background:#0a0908;color:#f5f1ea;font-family:system-ui,-apple-system,sans-serif;overflow:hidden}
+  #sv-loading{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(900px 600px at 50% 30%,#171310 0%,#0a0908 70%)}
+  .note{font-size:38px;animation:bob 1.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(6deg)}}
+  .lt{font-size:14px;color:#a89f92}.lt b{color:#f5f1ea;font-weight:600}
+</style>
+</head>
+<body>
+<div id="sv-loading">
+  <div class="note">🎻</div>
+  <div class="lt"><b>Loading…</b> tuning up</div>
+</div>
+<script>
+(function(){
+  var SRC='violin.v1.js';
+  window.SV=window.SV||{};
+  function fail(msg){
+    var ld=document.getElementById('sv-loading'); if(!ld) return;
+    ld.innerHTML='<div style="text-align:center;max-width:440px;padding:20px">'+
+      '<div style="font-size:36px">🎻</div>'+
+      '<h2 style="margin:12px 0 8px;font-weight:600">Couldn&rsquo;t load</h2>'+
+      '<p style="color:#a89f92;font-size:14px;line-height:1.55">'+msg+'</p>'+
+      '<p style="margin-top:8px;color:#a89f92;font-size:13px">Try a hard refresh (Ctrl/Cmd+Shift+R) or another browser. The microphone also needs HTTPS.</p>'+
+      '<p style="margin-top:16px"><a href="index.html" style="color:#e8b464;text-decoration:none">&larr; Back to portfolio</a></p></div>';
+  }
+  function scriptTagFallback(){
+    var s=document.createElement('script');
+    s.src=SRC+'?v='+Date.now();
+    s.onerror=function(){ fail('The bundle ('+SRC+') couldn&rsquo;t be fetched or executed on this network.'); };
+    document.body.appendChild(s);
+  }
+  fetch(SRC+'?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(code){
+      try{ (0,eval)(code); }
+      catch(e){ window.SV.loadError=e; fail('The bundle loaded but hit an error while starting: '+(e&&e.message?e.message:e)); }
+    })
+    .catch(function(){ scriptTagFallback(); });
+  setTimeout(function(){
+    if (!window.SV.ready && document.getElementById('sv-loading') && !window.SV.bootError && !window.SV.loadError){
+      fail('Timed out waiting for startup (stage: '+(window.SV.bootStage||'not started')+'). WebGL may be disabled.');
+    }
+  }, 12000);
+})();
+</script>
+</body>
+</html>
