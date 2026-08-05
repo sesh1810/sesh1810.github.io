@@ -369,6 +369,7 @@ section{padding:5.5rem 0}
 .edu-card:hover::before{transform:scaleX(1)}
 .edu-card h3{font-size:1.1rem;margin-bottom:.2rem;letter-spacing:-.3px}
 .edu-card .degree{color:var(--accent);font-size:.88rem;font-weight:500;margin-bottom:.35rem}
+.edu-card .degree-note{color:var(--text3);font-size:.72rem;font-weight:400;letter-spacing:.2px}
 .edu-card .edu-date{
   font-family:'JetBrains Mono',monospace;
   color:var(--text3);font-size:.76rem;margin-bottom:.6rem;
@@ -793,7 +794,7 @@ footer .footer-links svg{width:15px;height:15px}
 <div class="container">
 <div class="hero-content">
   <div class="hero-text">
-    <div class="hero-label"><span class="status-dot"></span> Open to Full-Time TPM Roles</div>
+    <div class="hero-label"><span class="status-dot"></span> Open to Full-Time PM &amp; TPM Roles</div>
     <h1>Seshasayi <span class="gradient-text">Rangaraj</span></h1>
     <p class="hero-sub">Engineering Management professional with 5+ years delivering enterprise SaaS platforms and complex technical programs. Former engineering lead at Oracle. Technical Program Manager Intern on the Megapack Firmware team at Tesla.</p>
     <div class="hero-contact">
@@ -935,7 +936,7 @@ footer .footer-links svg{width:15px;height:15px}
 <div class="container">
 <div class="section-header">
   <div class="section-label">Case Studies</div>
-  <h2 class="section-title">Engineering Through a TPM Lens</h2>
+  <h2 class="section-title">How I Think About Shipping</h2>
 </div>
 <div class="articles-inline">
 
@@ -948,14 +949,13 @@ footer .footer-links svg{width:15px;height:15px}
     <span class="article-badge badge-time">5 min read</span>
   </div>
   <h2 class="article-title">Shipping Agentic AI Inside Enterprise Middleware</h2>
-  <p class="article-subtitle">How we brought autonomous AI agents into Oracle Integration Cloud &mdash; and what I'd do differently as a TPM</p>
+  <p class="article-subtitle">How we brought autonomous AI agents into Oracle Integration Cloud, and what I would do differently today</p>
 </div>
 <div class="article-body">
 
 <h3>What Actually Happened</h3>
-<p>I was a Senior Member of Technical Staff on Oracle Integration Cloud (OIC). In 2024, our team took on a big bet: embedding agentic AI capabilities directly into OIC3, Oracle's middleware platform that thousands of enterprises use to connect their SaaS apps, databases, and on-prem systems.</p>
-<p>The idea was straightforward. Instead of customers hand-wiring every integration flow, an AI agent could understand a business request in natural language, reason about which connectors and APIs to call, execute a multi-step integration plan, and handle errors autonomously. We called it Agentic AI in OIC.</p>
-<p>I built parts of this system as an engineer. Here's the TPM story I now see underneath it.</p>
+<p>I was a Senior Member of Technical Staff on Oracle Integration Cloud. In 2024 our team embedded agentic AI directly into OIC3, the middleware platform thousands of enterprises use to connect their SaaS apps, databases, and on-prem systems.</p>
+<p>Instead of hand-wiring every integration flow, an AI agent could read a business request in plain language, decide which connectors to call, execute a multi-step plan, and handle its own errors. I built parts of it as an engineer. Here is the program story underneath it.</p>
 
 <h3>The Architecture We Shipped</h3>
 <div class="diagram-container">
@@ -975,37 +975,37 @@ footer .footer-links svg{width:15px;height:15px}
     <div class="diagram-node">Execution<br><small style="color:var(--text3)">monitored + auditable</small></div>
   </div>
 </div>
-<p>The agent treats OIC's existing connectors and integration recipes as <strong>tools</strong>. It can discover what's available in a customer's environment, compose a multi-step flow, execute it, and adapt when something fails. The key constraint: every action the agent takes must be auditable and reversible. Enterprise customers expect full traceability on anything touching their production systems.</p>
+<p>The agent treats OIC's connectors and recipes as <strong>tools</strong>. It discovers what exists in a customer's environment, composes a flow, runs it, and adapts when something fails. The hard constraint: every action must be auditable and reversible, because enterprise customers expect full traceability on anything touching production.</p>
 
-<h3>The Hard Parts (Where a TPM Was Needed)</h3>
-<p>As an engineer, I focused on making the agent work. Looking back, the organizational complexity dwarfed the technical problems.</p>
+<h3>The Hard Parts</h3>
+<p>As an engineer I focused on making the agent work. The organizational complexity turned out to be bigger than the technical problems.</p>
 
 <div class="callout">
   <div class="callout-title">The Real Challenge</div>
-  <p>Three teams owned pieces of this: the AI/ML team building the agent reasoning layer, the core platform team owning OIC's connector infrastructure, and the security team who had to sign off on an AI system making autonomous API calls on behalf of enterprise customers. Nobody had a shared definition of "done."</p>
+  <p>Three teams owned pieces of this: AI/ML built the reasoning layer, core platform owned the connector infrastructure, and security had to sign off on an AI making autonomous API calls for enterprise customers. Nobody shared a definition of "done."</p>
 </div>
 
-<p>If I'd been the TPM on this program, here's what I would have driven:</p>
+<p>Owning this program end to end, here is what I would have driven:</p>
 
 <div class="phase-timeline">
   <div class="phase">
     <span class="phase-label">Problem 1</span>
-    <div class="phase-content"><strong>No shared success criteria.</strong> The AI team measured agent accuracy. The platform team measured connector uptime. Security measured audit coverage. A TPM's first job: define a single metric everyone agrees on. I'd propose <em>successful autonomous integration completions per day</em>, end-to-end, with security audit passing.</div>
+    <div class="phase-content"><strong>No shared success criteria.</strong> AI measured agent accuracy, platform measured connector uptime, security measured audit coverage. The first job is one metric everyone signs up to: <em>successful autonomous integration completions per day</em>, with the security audit passing.</div>
   </div>
   <div class="phase">
     <span class="phase-label">Problem 2</span>
-    <div class="phase-content"><strong>The trust gap with enterprise customers.</strong> Enterprises don't want an AI autonomously calling their Salesforce API. The rollout needed a progressive trust model: start with the agent <em>suggesting</em> integration flows for human approval, then graduate to semi-autonomous execution with guardrails, then full autonomy for low-risk flows only. This sequencing is TPM work.</div>
+    <div class="phase-content"><strong>The trust gap.</strong> Enterprises are wary of an AI calling their Salesforce API on its own. The rollout needed a trust ladder: the agent <em>suggests</em> flows for approval, then executes with guardrails, then runs low risk flows alone. Sequencing that ladder is a product decision.</div>
   </div>
   <div class="phase">
     <span class="phase-label">Problem 3</span>
-    <div class="phase-content"><strong>Connector compatibility wasn't binary.</strong> OIC has 100+ connectors. The agent could use maybe 40 of them reliably at launch. Somebody needed to own the connector certification matrix, prioritize which connectors to onboard next based on customer demand, and communicate clearly what's supported vs. what's coming. Engineers don't naturally do this. TPMs do.</div>
+    <div class="phase-content"><strong>Connector coverage.</strong> OIC has 100+ connectors and the agent handled roughly 40 reliably at launch. Someone had to own the certification queue, rank connectors by customer demand, and publish what was supported. That is a prioritization call.</div>
   </div>
 </div>
 
-<h3>What I'd Ship as a TPM</h3>
+<h3>How I Would Structure It</h3>
 <table class="risk-table">
   <thead>
-    <tr><th>Workstream</th><th>Owner</th><th>TPM Role</th></tr>
+    <tr><th>Workstream</th><th>Owner</th><th>What I Would Own</th></tr>
   </thead>
   <tbody>
     <tr>
@@ -1034,8 +1034,8 @@ footer .footer-links svg{width:15px;height:15px}
 <div class="takeaways">
   <h3>What I Learned</h3>
   <ul>
-    <li><strong>Shipping AI in the enterprise is mostly alignment work.</strong> Getting security, platform, and AI teams to agree on what "safe enough" means took longer than building the agent itself</li>
-    <li><strong>Enterprise customers need a trust ladder.</strong> Suggest first, assist second, act third. We learned this the hard way when early demos spooked a design partner by auto-triggering their SAP connector</li>
+    <li><strong>Shipping AI in the enterprise is mostly alignment work.</strong> Agreeing on what "safe enough" meant took longer than building the agent</li>
+    <li><strong>Enterprise customers need a trust ladder.</strong> Suggest, then assist, then act. We learned it the hard way when a demo spooked a design partner by auto-triggering their SAP connector</li>
   </ul>
 </div>
 
@@ -1051,13 +1051,13 @@ footer .footer-links svg{width:15px;height:15px}
     <span class="article-badge badge-time">4 min read</span>
   </div>
   <h2 class="article-title">Coordinating Surgeons and ML Engineers</h2>
-  <p class="article-subtitle">A biomedical AI research collaboration that was, in hindsight, a technical program management exercise</p>
+  <p class="article-subtitle">A biomedical AI research collaboration that was, in hindsight, a program management exercise</p>
 </div>
 <div class="article-body">
 
 <h3>The Project</h3>
-<p>At the National University of Singapore, I worked on a research project to detect Intracerebral Hemorrhage (brain bleeds) from CT scans using deep learning. The work was published in <em>Medical &amp; Biological Engineering &amp; Computing</em> (Springer).</p>
-<p>My title was Research Collaborator. But the actual job? Sitting between neurosurgeons who needed clinical accuracy and ML engineers who needed clean data and clear labels. That's coordination work. That's TPM work.</p>
+<p>At the National University of Singapore I worked on detecting Intracerebral Hemorrhage (brain bleeds) from CT scans using deep learning. The work was published in <em>Medical &amp; Biological Engineering &amp; Computing</em> (Springer).</p>
+<p>My title was Research Collaborator. The actual job was sitting between neurosurgeons who needed clinical accuracy and ML engineers who needed clean data and clear labels. That is coordination work, and it is where the project moved.</p>
 
 <h3>The Stakeholder Map</h3>
 <div class="diagram-container">
@@ -1087,28 +1087,28 @@ footer .footer-links svg{width:15px;height:15px}
 <div class="phase-timeline">
   <div class="phase">
     <span class="phase-label">Gap 1</span>
-    <div class="phase-content"><strong>What counts as "accurate"?</strong> The ML team optimized for AUC-ROC. The surgeons cared about sensitivity (don't miss a bleed) over specificity (false alarms are okay, missed bleeds kill people). I had to translate the clinical priority into a loss function the engineers could implement.</div>
+    <div class="phase-content"><strong>What counts as "accurate"?</strong> The ML team optimized for AUC-ROC. The surgeons cared about sensitivity, because a false alarm is survivable and a missed bleed is not. I translated that clinical priority into a loss function the engineers could implement.</div>
   </div>
   <div class="phase">
     <span class="phase-label">Gap 2</span>
-    <div class="phase-content"><strong>Annotation bottleneck.</strong> Radiologists are expensive and busy. We needed thousands of labeled CT scans, but our radiologist collaborators could annotate maybe 50 per week. I had to negotiate a labeling protocol that was fast enough for the engineers but rigorous enough for the clinicians. We settled on a two-tier system: coarse labels for training, expert-reviewed labels for validation.</div>
+    <div class="phase-content"><strong>Annotation bottleneck.</strong> We needed thousands of labeled CT scans and our radiologists could annotate about 50 a week. We settled on a two tier protocol: coarse labels for training, expert reviewed labels for validation.</div>
   </div>
   <div class="phase">
     <span class="phase-label">Gap 3</span>
-    <div class="phase-content"><strong>Publication vs. product timelines.</strong> The surgeons wanted a published paper with clinical validation. The engineering team wanted to ship a working model. These are different deliverables with different quality bars. I managed both tracks in parallel, with shared milestones where the work overlapped.</div>
+    <div class="phase-content"><strong>Two different finish lines.</strong> The surgeons wanted a published paper with clinical validation. The engineers wanted a shipped model. I ran both tracks in parallel with shared milestones where they overlapped.</div>
   </div>
 </div>
 
 <div class="callout">
-  <div class="callout-title">The TPM Realization</div>
-  <p>I didn't know the term "TPM" during this project. But I was doing the job: aligning stakeholders who don't share a vocabulary, managing dependencies between teams with different incentives, and making sure the final output met everyone's definition of success. The published paper was the deliverable. Getting surgeons and engineers to agree on what goes in it -- that was the actual program.</p>
+  <div class="callout-title">The Realization</div>
+  <p>I had no title for this work at the time, but it was the job: aligning stakeholders who share no vocabulary, managing dependencies between teams with different incentives, and making sure the output met everyone's definition of success. The paper was the deliverable. Getting surgeons and engineers to agree on what went in it was the actual program.</p>
 </div>
 
 <div class="takeaways">
   <h3>What I Learned</h3>
   <ul>
-    <li><strong>Vocabulary kills more cross-domain projects than technology does.</strong> Our model worked within weeks. Getting agreement on what "works" means in clinical terms took months</li>
-    <li><strong>The most valuable person on the team was the one who could translate between domains.</strong> I spent more time in whiteboards with surgeons than in Jupyter notebooks, and that's where the project actually moved forward</li>
+    <li><strong>Vocabulary kills more cross-domain projects than technology does.</strong> The model worked in weeks. Agreeing on what "works" meant clinically took months</li>
+    <li><strong>The translator is the most valuable person on the team.</strong> I spent more time at whiteboards with surgeons than in Jupyter notebooks, and that is where the project moved</li>
   </ul>
 </div>
 
@@ -1196,7 +1196,7 @@ footer .footer-links svg{width:15px;height:15px}
 <div class="edu-grid">
 
   <div class="edu-card">
-    <div class="degree">M.S. Engineering Management</div>
+    <div class="degree">M.S. Engineering Management <span class="degree-note">(tech MBA)</span></div>
     <h3>Purdue University</h3>
     <div class="edu-date">Expected Graduation: May 2027 &mdash; West Lafayette, IN</div>
     <div class="coursework">
